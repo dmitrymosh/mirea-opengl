@@ -65,14 +65,14 @@
 		<a href="http://threejs.org" target="_blank">three.js</a> - OBJMTLLoader test
 		</div>
 
-		<script src="./three.js/build/three.js"></script>
+		<script src="./js/three.js"></script>
 
 		<!--script src="./three.js/examples/js/loaders/MTLLoader.js"></script-->
-		<script src="./three.js/examples/js/loaders/OBJLoader.js"></script>
+		<script src="./js/loaders/OBJLoader.js"></script>
 
-		<script src="./three.js/examples/js/Detector.js"></script>
-		<script src="./three.js/examples/js/libs/stats.min.js"></script>
-        <script src="./three.js/examples/js/controls/EditorControls.js"></script>
+		<!--script src="./js/Detector.js"></script-->
+		<script src="./js/libs/stats.min.js"></script>
+        <script src="./js/controls/EditorControls.js"></script>
         <!--div id="blocker">
 
 			<div id="instructions">
@@ -162,7 +162,7 @@
 
 				var texture = new THREE.Texture();
                 var loader = new THREE.ImageLoader( manager );
-				loader.load( './Stone.1.jpg', function ( image ) {
+				loader.load( './data/Stone.1.jpg', function ( image ) {
 
 					texture.image = image;
 					texture.needsUpdate = true;
@@ -173,7 +173,7 @@
 				texture.repeat.set( 0.01, 0.01 );
 				
                 var texture1 = new THREE.Texture();
-                loader.load( './Finishes.Flooring.Wood.Parquet.1.jpg', function ( image ) {
+                loader.load( './data/Finishes.Flooring.Wood.Parquet.1.jpg', function ( image ) {
 
 					texture1.image = image;
 					texture1.needsUpdate = true;
@@ -185,8 +185,8 @@
                 var PI2 = Math.PI * 2;
                 
 				var loader = new THREE.OBJLoader();
-				loader.load( './mirea.obj', function ( object ) {
-                    var str = "A0_1_floor_1_f000".replace(/_/g,".");
+				loader.load( './data/mirea.obj', function ( object ) {
+                    //var str = "A0_1_floor_1_f000".replace(/_/g,".");
                     var RE = /([\w\d]+)\.?/g;
                     var level1 = /([\w\d]+)\.([\w\d]+)/;
                     var level2 = /([\w\d]+)\.([\w\d]+)\.([\w\d]+)/;
