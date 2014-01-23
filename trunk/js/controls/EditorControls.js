@@ -106,7 +106,33 @@ THREE.EditorControls = function ( object, domElement ) {
 		scope.dispatchEvent( changeEvent );
 
 	};
+    this.rotateEx = function ( delta ) {
 
+		vector.copy( object.position ).sub( center );
+
+		var theta = Math.atan2( vector.x, vector.z );
+		var phi = Math.atan2( Math.sqrt( vector.x * vector.x + vector.z * vector.z ), vector.y );
+
+		theta = delta.x;
+		phi = delta.y;
+
+		var EPS = 0.000001;
+
+		phi = Math.max( EPS, Math.min( Math.PI - EPS, phi ) );
+
+		var radius = vector.length();
+
+		vector.x = radius * Math.sin( phi ) * Math.sin( theta );
+		vector.y = radius * Math.cos( phi );
+		vector.z = radius * Math.sin( phi ) * Math.cos( theta );
+
+		object.position.copy( center ).add( vector );
+
+		object.lookAt( center );
+
+		scope.dispatchEvent( changeEvent );
+
+	};
 	// mouse
 
 	function onMouseDown( event ) {
