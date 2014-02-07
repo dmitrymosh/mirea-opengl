@@ -29,7 +29,7 @@ function init() {
     
     scene = new THREE.Scene();
     camera.lookAt( scene.position );
-    scene.fog = new THREE.Fog( 0xffffff, 5000, 100000 );
+    //scene.fog = new THREE.Fog( 0xffffff, 5000, 100000 );
     
     var vector = new THREE.Vector3(0,0,0);
     controls = new THREE.EditorControls( camera );
