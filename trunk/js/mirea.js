@@ -60,7 +60,7 @@ function init() {
 
     var texture = new THREE.Texture();
     var loader = new THREE.ImageLoader( manager );
-    loader.load( './data/Stone.1.jpg', function ( image ) {
+    loader.load( './data/clean.jpg', function ( image ) {
 
         texture.image = image;
         texture.needsUpdate = true;
@@ -109,7 +109,7 @@ function init() {
         var k = object.children.length;
         for(var i = 0; i < k; i++){
             if ( object.children[i] instanceof THREE.Mesh ) {                            
-                object.children[i].visible = false;
+                //object.children[i].visible = false;
                 var name = object.children[i].name.replace(/_/g,".");
                 object.children[i].name = name;
                 if(/building/.test(name)){
@@ -117,6 +117,8 @@ function init() {
                 } else if(/roof/.test(name)){
                     object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
                 } else if(/level/.test(name)){
+                    object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
+                } else {
                     object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
                 }
                 if(level4.test(name)){
@@ -128,6 +130,9 @@ function init() {
                 } else if(level1.test(name)){
                     tmp_obj[0].push(object.children[i]);
                 }
+                scene.add( object.children[i] );
+                k = object.children.length;
+                i--;
             }
         }
         
@@ -147,11 +152,12 @@ function init() {
 
         }
         */
+        /*
         for(var i = 0; i <  tmp_obj[0].length; i++){
             tmp_obj[0][i].visible = true;
             scene.add( tmp_obj[0][i] );
         }
-        
+        */
     } );
 
     //controls = new THREE.PointerLockControls( camera );
