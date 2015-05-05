@@ -29,13 +29,20 @@ THREE.WebGLRenderTarget = function ( width, height, options ) {
 
 	this.generateMipmaps = true;
 
-	this.shareDepthFrom = null;
+	this.shareDepthFrom = options.shareDepthFrom !== undefined ? options.shareDepthFrom : null;
 
 };
 
 THREE.WebGLRenderTarget.prototype = {
 
 	constructor: THREE.WebGLRenderTarget,
+
+	setSize: function ( width, height ) {
+
+		this.width = width;
+		this.height = height;
+
+	},
 
 	clone: function () {
 

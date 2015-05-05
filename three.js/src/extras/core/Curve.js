@@ -43,7 +43,7 @@ THREE.Curve = function () {
 
 THREE.Curve.prototype.getPoint = function ( t ) {
 
-	console.log( "Warning, getPoint() not implemented!" );
+	THREE.warn( "THREE.Curve: Warning, getPoint() not implemented!" );
 	return null;
 
 };
@@ -62,7 +62,7 @@ THREE.Curve.prototype.getPointAt = function ( u ) {
 
 THREE.Curve.prototype.getPoints = function ( divisions ) {
 
-	if ( !divisions ) divisions = 5;
+	if ( ! divisions ) divisions = 5;
 
 	var d, pts = [];
 
@@ -80,7 +80,7 @@ THREE.Curve.prototype.getPoints = function ( divisions ) {
 
 THREE.Curve.prototype.getSpacedPoints = function ( divisions ) {
 
-	if ( !divisions ) divisions = 5;
+	if ( ! divisions ) divisions = 5;
 
 	var d, pts = [];
 
@@ -107,11 +107,11 @@ THREE.Curve.prototype.getLength = function () {
 
 THREE.Curve.prototype.getLengths = function ( divisions ) {
 
-	if ( !divisions ) divisions = (this.__arcLengthDivisions) ? (this.__arcLengthDivisions): 200;
+	if ( ! divisions ) divisions = (this.__arcLengthDivisions) ? (this.__arcLengthDivisions) : 200;
 
 	if ( this.cacheArcLengths
 		&& ( this.cacheArcLengths.length == divisions + 1 )
-		&& !this.needsUpdate) {
+		&& ! this.needsUpdate) {
 
 		//console.log( "cached", this.cacheArcLengths );
 		return this.cacheArcLengths;
@@ -182,12 +182,10 @@ THREE.Curve.prototype.getUtoTmapping = function ( u, distance ) {
 		if ( comparison < 0 ) {
 
 			low = i + 1;
-			continue;
 
 		} else if ( comparison > 0 ) {
 
 			high = i - 1;
-			continue;
 
 		} else {
 
@@ -214,17 +212,17 @@ THREE.Curve.prototype.getUtoTmapping = function ( u, distance ) {
 	// we could get finer grain at lengths, or use simple interpolatation between two points
 
 	var lengthBefore = arcLengths[ i ];
-    var lengthAfter = arcLengths[ i + 1 ];
+	var lengthAfter = arcLengths[ i + 1 ];
 
-    var segmentLength = lengthAfter - lengthBefore;
+	var segmentLength = lengthAfter - lengthBefore;
 
     // determine where we are between the 'before' and 'after' points
 
-    var segmentFraction = ( targetArcLength - lengthBefore ) / segmentLength;
+	var segmentFraction = ( targetArcLength - lengthBefore ) / segmentLength;
 
     // add that fractional amount to t
 
-    var t = ( i + segmentFraction ) / ( il -1 );
+	var t = ( i + segmentFraction ) / ( il - 1 );
 
 	return t;
 
@@ -282,12 +280,12 @@ THREE.Curve.Utils = {
 
 	tangentCubicBezier: function (t, p0, p1, p2, p3 ) {
 
-		return -3 * p0 * (1 - t) * (1 - t)  +
-			3 * p1 * (1 - t) * (1-t) - 6 *t *p1 * (1-t) +
-			6 * t *  p2 * (1-t) - 3 * t * t * p2 +
+		return - 3 * p0 * (1 - t) * (1 - t)  +
+			3 * p1 * (1 - t) * (1 - t) - 6 * t * p1 * (1 - t) +
+			6 * t *  p2 * (1 - t) - 3 * t * t * p2 +
 			3 * t * t * p3;
-	},
 
+	},
 
 	tangentSpline: function ( t, p0, p1, p2, p3 ) {
 
@@ -295,7 +293,7 @@ THREE.Curve.Utils = {
 
 		var h00 = 6 * t * t - 6 * t; 	// derived from 2t^3 − 3t^2 + 1
 		var h10 = 3 * t * t - 4 * t + 1; // t^3 − 2t^2 + t
-		var h01 = -6 * t * t + 6 * t; 	// − 2t3 + 3t2
+		var h01 = - 6 * t * t + 6 * t; 	// − 2t3 + 3t2
 		var h11 = 3 * t * t - 2 * t;	// t3 − t2
 
 		return h00 + h10 + h01 + h11;
@@ -328,6 +326,7 @@ THREE.Curve.Utils = {
 THREE.Curve.create = function ( constructor, getPointFunc ) {
 
 	constructor.prototype = Object.create( THREE.Curve.prototype );
+	constructor.prototype.constructor = constructor;
 	constructor.prototype.getPoint = getPointFunc;
 
 	return constructor;

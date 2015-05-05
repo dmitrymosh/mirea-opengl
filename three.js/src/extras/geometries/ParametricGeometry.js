@@ -11,14 +11,21 @@ THREE.ParametricGeometry = function ( func, slices, stacks ) {
 
 	THREE.Geometry.call( this );
 
+	this.type = 'ParametricGeometry';
+
+	this.parameters = {
+		func: func,
+		slices: slices,
+		stacks: stacks
+	};
+
 	var verts = this.vertices;
 	var faces = this.faces;
 	var uvs = this.faceVertexUvs[ 0 ];
 
-	var i, il, j, p;
+	var i, j, p;
 	var u, v;
 
-	var stackCount = stacks + 1;
 	var sliceCount = slices + 1;
 
 	for ( i = 0; i <= stacks; i ++ ) {
@@ -68,10 +75,10 @@ THREE.ParametricGeometry = function ( func, slices, stacks ) {
 	// var diff = this.mergeVertices();
 	// console.log('removed ', diff, ' vertices by merging');
 
-	this.computeCentroids();
 	this.computeFaceNormals();
 	this.computeVertexNormals();
 
 };
 
 THREE.ParametricGeometry.prototype = Object.create( THREE.Geometry.prototype );
+THREE.ParametricGeometry.prototype.constructor = THREE.ParametricGeometry;

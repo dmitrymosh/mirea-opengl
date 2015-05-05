@@ -1,14 +1,35 @@
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
+
 var Editor = function () {
 
 	var SIGNALS = signals;
 
 	this.signals = {
 
+		// script
+
+		editScript: new SIGNALS.Signal(),
+
+		// player
+
+		startPlayer: new SIGNALS.Signal(),
+		stopPlayer: new SIGNALS.Signal(),
+
 		// actions
 
-		playAnimations: new SIGNALS.Signal(),
+		playAnimation: new SIGNALS.Signal(),
+		stopAnimation: new SIGNALS.Signal(),
+
+		// showDialog: new SIGNALS.Signal(),
 
 		// notifications
+
+		editorCleared: new SIGNALS.Signal(),
+
+		savingStarted: new SIGNALS.Signal(),
+		savingFinished: new SIGNALS.Signal(),
 
 		themeChanged: new SIGNALS.Signal(),
 
@@ -21,7 +42,11 @@ var Editor = function () {
 
 		cameraChanged: new SIGNALS.Signal(),
 
+		geometryChanged: new SIGNALS.Signal(),
+
 		objectSelected: new SIGNALS.Signal(),
+		objectFocused: new SIGNALS.Signal(),
+
 		objectAdded: new SIGNALS.Signal(),
 		objectChanged: new SIGNALS.Signal(),
 		objectRemoved: new SIGNALS.Signal(),
@@ -30,24 +55,37 @@ var Editor = function () {
 		helperRemoved: new SIGNALS.Signal(),
 
 		materialChanged: new SIGNALS.Signal(),
+
+		scriptAdded: new SIGNALS.Signal(),
+		scriptChanged: new SIGNALS.Signal(),
+		scriptRemoved: new SIGNALS.Signal(),
+
 		fogTypeChanged: new SIGNALS.Signal(),
 		fogColorChanged: new SIGNALS.Signal(),
 		fogParametersChanged: new SIGNALS.Signal(),
-		windowResize: new SIGNALS.Signal()
+		windowResize: new SIGNALS.Signal(),
+
+		showGridChanged: new SIGNALS.Signal()
 
 	};
-	
+
 	this.config = new Config();
 	this.storage = new Storage();
 	this.loader = new Loader( this );
 
+	this.camera = new THREE.PerspectiveCamera( 50, 1, 1, 100000 );
+	this.camera.name = 'Camera';
+
 	this.scene = new THREE.Scene();
+	this.scene.name = 'Scene';
+
 	this.sceneHelpers = new THREE.Scene();
 
 	this.object = {};
 	this.geometries = {};
 	this.materials = {};
 	this.textures = {};
+	this.scripts = {};
 
 	this.selected = null;
 	this.helpers = {};
@@ -64,8 +102,19 @@ Editor.prototype = {
 
 	},
 
+	/*
+	showDialog: function ( value ) {
+
+		this.signals.showDialog.dispatch( value );
+
+	},
+	*/
+
+	//
+
 	setScene: function ( scene ) {
 
+		this.scene.uuid = scene.uuid;
 		this.scene.name = scene.name;
 		this.scene.userData = JSON.parse( JSON.stringify( scene.userData ) );
 
@@ -106,7 +155,31 @@ Editor.prototype = {
 
 	},
 
-	setObjectName: function ( object, name ) {
+	moveObject: function ( object, parent, before ) {
+
+		if ( parent === undefined ) {
+
+			parent = this.scene;
+
+		}
+
+		parent.add( object );
+
+		// sort children array
+
+		if ( before !== undefined ) {
+
+			var index = parent.children.indexOf( before );
+			parent.children.splice( index, 0, object );
+			parent.children.pop();
+
+		}
+
+		this.signals.sceneGraphChanged.dispatch();
+
+	},
+
+	nameObject: function ( object, name ) {
 
 		object.name = name;
 		this.signals.sceneGraphChanged.dispatch();
@@ -116,8 +189,6 @@ Editor.prototype = {
 	removeObject: function ( object ) {
 
 		if ( object.parent === undefined ) return; // avoid deleting the camera or scene
-
-		if ( confirm( 'Delete ' + object.name + '?' ) === false ) return;
 
 		var scope = this;
 
@@ -175,82 +246,49 @@ Editor.prototype = {
 
 		return function ( object ) {
 
+			var helper;
+
 			if ( object instanceof THREE.Camera ) {
 
-				var picker = new THREE.Mesh( geometry, material );
-				picker.name = 'picker';
-				picker.userData.object = object;
-				picker.visible = false;
-
-				var helper = new THREE.CameraHelper( object, 10 );
-				helper.add( picker );
-			
-				this.sceneHelpers.add( helper );
-				this.helpers[ object.id ] = helper;
-
-				this.signals.helperAdded.dispatch( helper );
+				helper = new THREE.CameraHelper( object, 10 );
 
 			} else if ( object instanceof THREE.PointLight ) {
 
-				var picker = new THREE.Mesh( geometry, material );
-				picker.name = 'picker';
-				picker.userData.object = object;
-				picker.visible = false;
-
-				var helper = new THREE.PointLightHelper( object, 10 );
-				helper.add( picker );
-			
-				this.sceneHelpers.add( helper );
-				this.helpers[ object.id ] = helper;
-
-				this.signals.helperAdded.dispatch( helper );
+				helper = new THREE.PointLightHelper( object, 10 );
 
 			} else if ( object instanceof THREE.DirectionalLight ) {
 
-				var picker = new THREE.Mesh( geometry, material );
-				picker.name = 'picker';
-				picker.userData.object = object;
-				picker.visible = false;
-
-				var helper = new THREE.DirectionalLightHelper( object, 20 );
-				helper.add( picker );
-
-				this.sceneHelpers.add( helper );
-				this.helpers[ object.id ] = helper;
-
-				this.signals.helperAdded.dispatch( helper );
+				helper = new THREE.DirectionalLightHelper( object, 20 );
 
 			} else if ( object instanceof THREE.SpotLight ) {
 
-				var picker = new THREE.Mesh( geometry, material );
-				picker.name = 'picker';
-				picker.userData.object = object;
-				picker.visible = false;
-
-				var helper = new THREE.SpotLightHelper( object, 10 );
-				helper.add( picker );
-
-				this.sceneHelpers.add( helper );
-				this.helpers[ object.id ] = helper;
-
-				this.signals.helperAdded.dispatch( helper );
+				helper = new THREE.SpotLightHelper( object, 10 );
 
 			} else if ( object instanceof THREE.HemisphereLight ) {
 
-				var picker = new THREE.Mesh( geometry, material );
-				picker.name = 'picker';
-				picker.userData.object = object;
-				picker.visible = false;
+				helper = new THREE.HemisphereLightHelper( object, 10 );
 
-				var helper = new THREE.HemisphereLightHelper( object, 10 );
-				helper.add( picker );
+			} else if ( object instanceof THREE.SkinnedMesh ) {
 
-				this.sceneHelpers.add( helper );
-				this.helpers[ object.id ] = helper;
+				helper = new THREE.SkeletonHelper( object );
 
-				this.signals.helperAdded.dispatch( helper );
+			} else {
+
+				// no helper for this object type
+				return;
 
 			}
+
+			var picker = new THREE.Mesh( geometry, material );
+			picker.name = 'picker';
+			picker.userData.object = object;
+			picker.visible = false;
+			helper.add( picker );
+
+			this.sceneHelpers.add( helper );
+			this.helpers[ object.id ] = helper;
+
+			this.signals.helperAdded.dispatch( helper );
 
 		};
 
@@ -273,17 +311,33 @@ Editor.prototype = {
 
 	//
 
-	parent: function ( object, parent ) {
+	addScript: function ( object, script ) {
 
-		if ( parent === undefined ) {
+		if ( this.scripts[ object.uuid ] === undefined ) {
 
-			parent = this.scene;
+			this.scripts[ object.uuid ] = [];
 
 		}
 
-		parent.add( object );
+		this.scripts[ object.uuid ].push( script );
 
-		this.signals.sceneGraphChanged.dispatch();
+		this.signals.scriptAdded.dispatch( script );
+
+	},
+
+	removeScript: function ( object, script ) {
+
+		if ( this.scripts[ object.uuid ] === undefined ) return;
+
+		var index = this.scripts[ object.uuid ].indexOf( script );
+
+		if ( index !== - 1 ) {
+
+			this.scripts[ object.uuid ].splice( index, 1 );
+
+		}
+
+		this.signals.scriptRemoved.dispatch( script );
 
 	},
 
@@ -291,25 +345,33 @@ Editor.prototype = {
 
 	select: function ( object ) {
 
+		if ( this.selected === object ) return;
+
+		var uuid = null;
+
+		if ( object !== null ) {
+
+			uuid = object.uuid;
+
+		}
+
 		this.selected = object;
-		this.config.setKey( 'selected', object.uuid );
+
+		this.config.setKey( 'selected', uuid );
 		this.signals.objectSelected.dispatch( object );
 
 	},
 
 	selectById: function ( id ) {
 
-		var scope = this;
+		if ( id === this.camera.id ) {
 
-		this.scene.traverse( function ( child ) {
+			this.select( this.camera );
+			return;
 
-			if ( child.id === id ) {
+		}
 
-				scope.select( child );
-
-			}
-
-		} );
+		this.select( this.scene.getObjectById( id, true ) );
 
 	},
 
@@ -335,92 +397,87 @@ Editor.prototype = {
 
 	},
 
-	// utils
+	focus: function ( object ) {
 
-	getObjectType: function ( object ) {
-
-		var types = {
-
-			'Scene': THREE.Scene,
-			'PerspectiveCamera': THREE.PerspectiveCamera,
-			'AmbientLight': THREE.AmbientLight,
-			'DirectionalLight': THREE.DirectionalLight,
-			'HemisphereLight': THREE.HemisphereLight,
-			'PointLight': THREE.PointLight,
-			'SpotLight': THREE.SpotLight,
-			'Mesh': THREE.Mesh,
-			'Sprite': THREE.Sprite,
-			'Object3D': THREE.Object3D
-
-		};
-
-		for ( var type in types ) {
-
-			if ( object instanceof types[ type ] ) return type;
-
-		}
+		this.signals.objectFocused.dispatch( object );
 
 	},
 
-	getGeometryType: function ( geometry ) {
+	focusById: function ( id ) {
 
-		var types = {
-
-			'CircleGeometry': THREE.CircleGeometry,
-			'CubeGeometry': THREE.CubeGeometry,
-			'CylinderGeometry': THREE.CylinderGeometry,
-			'ExtrudeGeometry': THREE.ExtrudeGeometry,
-			'IcosahedronGeometry': THREE.IcosahedronGeometry,
-			'LatheGeometry': THREE.LatheGeometry,
-			'OctahedronGeometry': THREE.OctahedronGeometry,
-			'ParametricGeometry': THREE.ParametricGeometry,
-			'PlaneGeometry': THREE.PlaneGeometry,
-			'PolyhedronGeometry': THREE.PolyhedronGeometry,
-			'ShapeGeometry': THREE.ShapeGeometry,
-			'SphereGeometry': THREE.SphereGeometry,
-			'TetrahedronGeometry': THREE.TetrahedronGeometry,
-			'TextGeometry': THREE.TextGeometry,
-			'TorusGeometry': THREE.TorusGeometry,
-			'TorusKnotGeometry': THREE.TorusKnotGeometry,
-			'TubeGeometry': THREE.TubeGeometry,
-			'Geometry': THREE.Geometry,
-			'BufferGeometry': THREE.BufferGeometry
-
-		};
-
-		for ( var type in types ) {
-
-			if ( geometry instanceof types[ type ] ) return type;
-
-		}
+		this.focus( this.scene.getObjectById( id, true ) );
 
 	},
 
-	getMaterialType: function ( material ) {
+	clear: function () {
 
-		var types = {
+		this.camera.position.set( 500, 250, 500 );
+		this.camera.lookAt( new THREE.Vector3() );
 
-			'LineBasicMaterial': THREE.LineBasicMaterial,
-			'LineDashedMaterial': THREE.LineDashedMaterial,
-			'MeshBasicMaterial': THREE.MeshBasicMaterial,
-			'MeshDepthMaterial': THREE.MeshDepthMaterial,
-			'MeshFaceMaterial': THREE.MeshFaceMaterial,
-			'MeshLambertMaterial': THREE.MeshLambertMaterial,
-			'MeshNormalMaterial': THREE.MeshNormalMaterial,
-			'MeshPhongMaterial': THREE.MeshPhongMaterial,
-			'ParticleSystemMaterial': THREE.ParticleSystemMaterial,
-			'ShaderMaterial': THREE.ShaderMaterial,
-			'SpriteCanvasMaterial': THREE.SpriteCanvasMaterial,
-			'SpriteMaterial': THREE.SpriteMaterial,
-			'Material': THREE.Material
+		var objects = this.scene.children;
 
-		};
+		while ( objects.length > 0 ) {
 
-		for ( var type in types ) {
-
-			if ( material instanceof types[ type ] ) return type;
+			this.removeObject( objects[ 0 ] );
 
 		}
+
+		this.geometries = {};
+		this.materials = {};
+		this.textures = {};
+		this.scripts = {};
+
+		this.deselect();
+
+		this.signals.editorCleared.dispatch();
+
+	},
+
+	//
+
+	fromJSON: function ( json ) {
+
+		var loader = new THREE.ObjectLoader();
+
+		// backwards
+
+		if ( json.scene === undefined ) {
+
+			var scene = loader.parse( json );
+
+			this.setScene( scene );
+
+			return;
+
+		}
+
+		// TODO: Clean this up somehow
+
+		var camera = loader.parse( json.camera );
+
+		this.camera.position.copy( camera.position );
+		this.camera.rotation.copy( camera.rotation );
+		this.camera.aspect = camera.aspect;
+		this.camera.near = camera.near;
+		this.camera.far = camera.far;
+
+		this.setScene( loader.parse( json.scene ) );
+		this.scripts = json.scripts;
+
+	},
+
+	toJSON: function () {
+
+		return {
+
+			project: {
+				vr: this.config.getKey( 'project/vr' )
+			},
+			camera: this.camera.toJSON(),
+			scene: this.scene.toJSON(),
+			scripts: this.scripts
+
+		};
 
 	}
 

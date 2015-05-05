@@ -7,15 +7,13 @@ THREE.VertexTangentsHelper = function ( object, size, hex, linewidth ) {
 
 	this.object = object;
 
-	this.size = size || 1;
+	this.size = ( size !== undefined ) ? size : 1;
 
-	var color = hex || 0x0000ff;
+	var color = ( hex !== undefined ) ? hex : 0x0000ff;
 
-	var width = linewidth || 1;
+	var width = ( linewidth !== undefined ) ? linewidth : 1;
 
 	var geometry = new THREE.Geometry();
-
-	var vertices = object.geometry.vertices;
 
 	var faces = object.geometry.faces;
 
@@ -41,6 +39,7 @@ THREE.VertexTangentsHelper = function ( object, size, hex, linewidth ) {
 };
 
 THREE.VertexTangentsHelper.prototype = Object.create( THREE.Line.prototype );
+THREE.VertexTangentsHelper.prototype.constructor = THREE.VertexTangentsHelper;
 
 THREE.VertexTangentsHelper.prototype.update = ( function ( object ) {
 
