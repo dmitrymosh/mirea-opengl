@@ -13,7 +13,6 @@
 				font-size:13px;
 				text-align:center;
 				font-weight: bold;
-				text-align:center;
 			}
 
 			a {
@@ -72,9 +71,9 @@
 			var windowHalfY = window.innerHeight / 2;
 
 			var width = window.innerWidth;
-			var height = window.innerHeight - 300;
+			var height = window.innerHeight;
 
-			var postprocessing = { enabled  : true };
+			var postprocessing = {};
 
 			init();
 			animate();
@@ -90,6 +89,7 @@
 				scene = new THREE.Scene();
 
 				renderer = new THREE.WebGLRenderer( { antialias: false } );
+				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( width, height );
 				container.appendChild( renderer.domElement );
 
@@ -118,8 +118,6 @@
 
 				var start = Date.now();
 
-				renderer.initMaterial( cubeMaterial, scene.__lights, scene.fog );
-
 				var xgrid = 14,
 					ygrid = 9,
 					zgrid = 14;
@@ -143,7 +141,6 @@
 
 						materials[ c ] = new THREE.MeshBasicMaterial( parameters );
 						mesh = new THREE.Mesh( geo, materials[ c ] );
-						renderer.initMaterial( materials[ c ], scene.__lights, scene.fog, mesh );
 
 					}
 
@@ -171,10 +168,6 @@
 				initPostprocessing();
 
 				renderer.autoClear = false;
-
-				renderer.domElement.style.position = 'absolute';
-				renderer.domElement.style.top = "150px";
-				renderer.domElement.style.left = "0px";
 
 				stats = new Stats();
 				stats.domElement.style.position = 'absolute';
@@ -249,7 +242,7 @@
 				windowHalfY = window.innerHeight / 2;
 
 				width = window.innerWidth;
-				height = window.innerHeight - 300;
+				height = window.innerHeight;
 
 				camera.aspect = width / height;
 				camera.updateProjectionMatrix();
@@ -312,16 +305,7 @@
 
 				}
 
-				if ( postprocessing.enabled ) {
-
-					postprocessing.composer.render( 0.1 );
-
-				} else {
-
-					renderer.clear();
-					renderer.render( scene, camera );
-
-				}
+				postprocessing.composer.render( 0.1 );
 
 			}
 

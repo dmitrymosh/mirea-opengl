@@ -29,7 +29,7 @@
 	
 	function indexOfValue( array, value ) {
 		
-		for ( var i = 0, il = array.length; i < il; i++ ) {
+		for ( var i = 0, il = array.length; i < il; i ++ ) {
 			
 			if ( array[ i ] === value ) {
 				
@@ -45,7 +45,7 @@
 	
 	function indexOfPropertyWithValue( array, property, value ) {
 		
-		for ( var i = 0, il = array.length; i < il; i++ ) {
+		for ( var i = 0, il = array.length; i < il; i ++ ) {
 			
 			if ( array[ i ][ property ] === value ) {
 				
@@ -111,7 +111,7 @@
 		
 		if ( this.scene ) {
 			
-			this.visualGeometry = new THREE.CubeGeometry( 1, 1, 1 );
+			this.visualGeometry = new THREE.BoxGeometry( 1, 1, 1 );
 			this.visualMaterial = new THREE.MeshBasicMaterial( { color: 0xFF0066, wireframe: true, wireframeLinewidth: 1 } );
 			
 		}
@@ -140,7 +140,7 @@
 			
 			if ( this.objectsDeferred.length > 0 ) {
 				
-				for ( var i = 0, il = this.objectsDeferred.length; i < il; i++ ) {
+				for ( var i = 0, il = this.objectsDeferred.length; i < il; i ++ ) {
 					
 					var deferred = this.objectsDeferred[ i ];
 					
@@ -221,7 +221,7 @@
 					geometry = object.geometry;
 					vertices = geometry.vertices;
 					
-					for ( i = 0, l = vertices.length; i < l; i++ ) {
+					for ( i = 0, l = vertices.length; i < l; i ++ ) {
 						
 						this.addObjectData( object, vertices[ i ] );
 						
@@ -232,7 +232,7 @@
 					geometry = object.geometry;
 					faces = geometry.faces;
 					
-					for ( i = 0, l = faces.length; i < l; i++ ) {
+					for ( i = 0, l = faces.length; i < l; i ++ ) {
 						
 						this.addObjectData( object, faces[ i ] );
 						
@@ -297,7 +297,7 @@
 					
 					// remove from objects data list
 					
-					for ( i = 0, l = objectsDataRemoved.length; i < l; i++ ) {
+					for ( i = 0, l = objectsDataRemoved.length; i < l; i ++ ) {
 						
 						objectData = objectsDataRemoved[ i ];
 						
@@ -341,7 +341,7 @@
 				
 				objectsData = octree.objectsData;
 				
-				for ( i = 0, l = objectsData.length; i < l; i++ ) {
+				for ( i = 0, l = objectsData.length; i < l; i ++ ) {
 					
 					objectData = objectsData[ i ];
 					
@@ -366,7 +366,7 @@
 			// check all object data for changes in position
 			// assumes all object matrices are up to date
 			
-			for ( i = 0, l = this.objectsData.length; i < l; i++ ) {
+			for ( i = 0, l = this.objectsData.length; i < l; i ++ ) {
 				
 				objectData = this.objectsData[ i ];
 				
@@ -402,7 +402,7 @@
 			
 			// update changed objects
 			
-			for ( i = 0, l = objectsUpdate.length; i < l; i++ ) {
+			for ( i = 0, l = objectsUpdate.length; i < l; i ++ ) {
 				
 				objectData = objectsUpdate[ i ];
 				
@@ -429,14 +429,14 @@
 			
 			parent = object.parent;
 			
-			while( parent ) {
+			while ( parent ) {
 				
 				parentCascade.push( parent );
 				parent = parent.parent;
 				
 			}
 			
-			for ( i = 0, l = parentCascade.length; i < l; i++ ) {
+			for ( i = 0, l = parentCascade.length; i < l; i ++ ) {
 				
 				parent = parentCascade[ i ];
 				
@@ -494,7 +494,7 @@
 			
 			// search each node of root
 			
-			for ( i = 0, l = this.root.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.root.nodesIndices.length; i < l; i ++ ) {
 				
 				node = this.root.nodesByIndex[ this.root.nodesIndices[ i ] ];
 				
@@ -511,7 +511,7 @@
 				
 				// for each object data found
 				
-				for ( i = 0, l = objects.length; i < l; i++ ) {
+				for ( i = 0, l = objects.length; i < l; i ++ ) {
 					
 					objectData = objects[ i ];
 					object = objectData.object;
@@ -624,12 +624,6 @@
 			this.face3 = true;
 			this.utilVec31FaceBounds = new THREE.Vector3();
 			
-		} else if ( part instanceof THREE.Face4 ) {
-			
-			this.face4 = true;
-			this.faces = part;
-			this.utilVec31FaceBounds = new THREE.Vector3();
-			
 		} else if ( part instanceof THREE.Vector3 ) {
 			
 			this.vertices = part;
@@ -658,11 +652,6 @@
 			if ( this.face3 ) {
 				
 				this.radius = this.getFace3BoundingRadius( this.object, this.faces );
-				this.position.copy( this.faces.centroid ).applyMatrix4( this.object.matrixWorld );
-				
-			} else if ( this.face4 ) {
-				
-				this.radius = this.getFace4BoundingRadius( this.object, this.faces );
 				this.position.copy( this.faces.centroid ).applyMatrix4( this.object.matrixWorld );
 				
 			} else if ( this.vertices ) {
@@ -697,6 +686,8 @@
 		},
 		
 		getFace3BoundingRadius: function ( object, face ) {
+
+			if ( face.centroid === undefined ) face.centroid = new THREE.Vector3();
 			
 			var geometry = object.geometry || object,
 				vertices = geometry.vertices,
@@ -707,22 +698,6 @@
 				
 			centroid.addVectors( va, vb ).add( vc ).divideScalar( 3 );
 			radius = Math.max( centroidToVert.subVectors( centroid, va ).length(), centroidToVert.subVectors( centroid, vb ).length(), centroidToVert.subVectors( centroid, vc ).length() );
-			
-			return radius;
-			
-		},
-		
-		getFace4BoundingRadius: function ( object, face ) {
-			
-			var geometry = object.geometry || object,
-				vertices = geometry.vertices,
-				centroid = face.centroid,
-				va = vertices[ face.a ], vb = vertices[ face.b ], vc = vertices[ face.c ], vd = vertices[ face.d ],
-				centroidToVert = this.utilVec31FaceBounds,
-				radius;
-				
-			centroid.addVectors( va, vb ).add( vc ).add( vd ).divideScalar( 4 );
-			radius = Math.max( centroidToVert.subVectors( centroid, va ).length(), centroidToVert.subVectors( centroid, vb ).length(), centroidToVert.subVectors( centroid, vc ).length(), centroidToVert.subVectors( centroid, vd ).length() );
 			
 			return radius;
 			
@@ -764,7 +739,7 @@
 		
 		// basic properties
 		
-		this.id = this.tree.nodeCount++;
+		this.id = this.tree.nodeCount ++;
 		this.position = parameters.position instanceof THREE.Vector3 ? parameters.position : new THREE.Vector3();
 		this.radius = parameters.radius > 0 ? parameters.radius : 1;
 		this.indexOctant = parameters.indexOctant;
@@ -836,7 +811,7 @@
 			
 			// cascade
 			
-			for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 				
 				this.nodesByIndex[ this.nodesIndices[ i ] ].updateProperties();
 				
@@ -857,7 +832,7 @@
 			
 			// unset parent in nodes
 			
-			for ( i = 0, l = nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = nodesIndices.length; i < l; i ++ ) {
 				
 				node = nodesByIndex[ nodesIndices[ i ] ];
 				
@@ -974,7 +949,7 @@
 			var i, l,
 				object;
 
-			for ( i = 0, l = objects.length; i < l; i++ ) {
+			for ( i = 0, l = objects.length; i < l; i ++ ) {
 				
 				object = objects[ i ];
 				
@@ -1002,7 +977,7 @@
 			
 			if ( nodesRemovedFrom.length > 0 ) {
 				
-				for ( i = 0, l = nodesRemovedFrom.length; i < l; i++ ) {
+				for ( i = 0, l = nodesRemovedFrom.length; i < l; i ++ ) {
 					
 					nodesRemovedFrom[ i ].shrink();
 					
@@ -1046,7 +1021,7 @@
 			
 				// search each object data for object and remove (slow)
 				
-				for ( i = this.objects.length - 1; i >= 0; i-- ) {
+				for ( i = this.objects.length - 1; i >= 0; i -- ) {
 					
 					objectData = this.objects[ i ];
 					
@@ -1084,7 +1059,7 @@
 			
 			if ( removeData.searchComplete !== true ) {
 				
-				for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+				for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 					
 					node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 					
@@ -1131,7 +1106,7 @@
 			
 			// for each object
 			
-			for ( i = 0, l = this.objects.length; i < l; i++ ) {
+			for ( i = 0, l = this.objects.length; i < l; i ++ ) {
 				
 				object = this.objects[ i ];
 				
@@ -1208,7 +1183,7 @@
 				
 				// for each object
 				
-				for ( i = 0, l = objects.length; i < l; i++ ) {
+				for ( i = 0, l = objects.length; i < l; i ++ ) {
 					
 					object = objects[ i ];
 					
@@ -1339,7 +1314,7 @@
 				
 				// reset counts
 				
-				for ( i = 0, l = iom.length; i < l; i++ ) {
+				for ( i = 0, l = iom.length; i < l; i ++ ) {
 					
 					iom[ i ].count = 0;
 					
@@ -1347,7 +1322,7 @@
 				
 				// for all outside objects, find outside octants containing most objects
 				
-				for ( i = 0, l = objects.length; i < l; i++ ) {
+				for ( i = 0, l = objects.length; i < l; i ++ ) {
 					
 					object = objects[ i ];
 					
@@ -1369,11 +1344,11 @@
 						
 						if ( flagsOutside & this.tree.FLAG_POS_X ) {
 							
-							iom[ this.tree.INDEX_OUTSIDE_POS_X ].count++;
+							iom[ this.tree.INDEX_OUTSIDE_POS_X ].count ++;
 							
 						} else if ( flagsOutside & this.tree.FLAG_NEG_X ) {
 							
-							iom[ this.tree.INDEX_OUTSIDE_NEG_X ].count++;
+							iom[ this.tree.INDEX_OUTSIDE_NEG_X ].count ++;
 							
 						}
 						
@@ -1381,11 +1356,11 @@
 						
 						if ( flagsOutside & this.tree.FLAG_POS_Y ) {
 							
-							iom[ this.tree.INDEX_OUTSIDE_POS_Y ].count++;
+							iom[ this.tree.INDEX_OUTSIDE_POS_Y ].count ++;
 							
 						} else if ( flagsOutside & this.tree.FLAG_NEG_Y ) {
 							
-							iom[ this.tree.INDEX_OUTSIDE_NEG_Y ].count++;
+							iom[ this.tree.INDEX_OUTSIDE_NEG_Y ].count ++;
 							
 						}
 						
@@ -1393,11 +1368,11 @@
 						
 						if ( flagsOutside & this.tree.FLAG_POS_Z ) {
 							
-							iom[ this.tree.INDEX_OUTSIDE_POS_Z ].count++;
+							iom[ this.tree.INDEX_OUTSIDE_POS_Z ].count ++;
 							
 						} else if ( flagsOutside & this.tree.FLAG_NEG_Z ) {
 							
-							iom[ this.tree.INDEX_OUTSIDE_NEG_Z ].count++;
+							iom[ this.tree.INDEX_OUTSIDE_NEG_Z ].count ++;
 							
 						}
 						
@@ -1499,7 +1474,7 @@
 					
 					// add all expand objects to parent
 					
-					for ( i = 0, l = objectsExpand.length; i < l; i++ ) {
+					for ( i = 0, l = objectsExpand.length; i < l; i ++ ) {
 						
 						this.tree.root.addObject( objectsExpand[ i ] );
 						
@@ -1571,7 +1546,7 @@
 			
 			nodes = toArray( nodes );
 			
-			for ( i = 0, l = nodes.length; i < l; i++ ) {
+			for ( i = 0, l = nodes.length; i < l; i ++ ) {
 				
 				node = nodes[ i ];
 				
@@ -1611,7 +1586,7 @@
 				nodeHeaviestObjectsCount = 0;
 				outsideHeaviestObjectsCount = this.objects.length;
 				
-				for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+				for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 					
 					node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 					
@@ -1650,7 +1625,7 @@
 			
 			// handle all nodes
 			
-			for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 				
 				node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 				
@@ -1873,7 +1848,7 @@
 				
 				// search subtree
 				
-				for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+				for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 					
 					node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 					
@@ -1942,7 +1917,7 @@
 			tmin = Math.max( Math.max( Math.min( t1, t2), Math.min( t3, t4)), Math.min( t5, t6));
 			
 			// if tmin > tmax or tmin > ray distance, ray doesn't intersect AABB
-			if( tmin > tmax || tmin > distance ) {
+			if ( tmin > tmax || tmin > distance ) {
 				return false;
 			}
 			
@@ -1957,7 +1932,7 @@
 
 			if ( this.nodesIndices.length > 0 ) {
 				
-				for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+				for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 
 					node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 
@@ -1986,7 +1961,7 @@
 			var i, l,
 				count = this.nodesIndices.length;
 			
-			for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 				
 				count += this.nodesByIndex[ this.nodesIndices[ i ] ].getNodeCountRecursive();
 				
@@ -2003,7 +1978,7 @@
 			
 			objects = ( objects || [] ).concat( this.objects );
 			
-			for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 				
 				node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 				
@@ -2020,7 +1995,7 @@
 			var i, l,
 				count = this.objects.length;
 			
-			for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 				
 				count += this.nodesByIndex[ this.nodesIndices[ i ] ].getObjectCountEnd();
 				
@@ -2035,7 +2010,7 @@
 			var count = this.objects.length,
 				parent = this.parent;
 			
-			while( parent instanceof THREE.OctreeNode ) {
+			while ( parent instanceof THREE.OctreeNode ) {
 				
 				count += parent.objects.length;
 				parent = parent.parent;
@@ -2058,7 +2033,7 @@
 			console.log( ( this.parent ? space + ' ' : ' ' ), '+ objects ( ', this.objects.length, ' ) ', this.objects );
 			console.log( ( this.parent ? space + ' ' : ' ' ), '+ children ( ', this.nodesIndices.length, ' )', this.nodesIndices, this.nodesByIndex );
 			
-			for ( i = 0, l = this.nodesIndices.length; i < l; i++ ) {
+			for ( i = 0, l = this.nodesIndices.length; i < l; i ++ ) {
 				
 				node = this.nodesByIndex[ this.nodesIndices[ i ] ];
 				
@@ -2126,7 +2101,7 @@
 		var i, il,
 			intersects = [];
 		
-		for ( i = 0, il = objects.length; i < il; i++ ) {
+		for ( i = 0, il = objects.length; i < il; i ++ ) {
 			
 			intersects = intersects.concat( this.intersectOctreeObject( objects[ i ], recursive ) );
 		

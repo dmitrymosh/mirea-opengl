@@ -15,18 +15,27 @@ THREE.ImageLoader.prototype = {
 	load: function ( url, onLoad, onProgress, onError ) {
 
 		var scope = this;
-		var image = document.createElement( 'img' );
 
-		if ( onLoad !== undefined ) {
+		var cached = THREE.Cache.get( url );
 
-			image.addEventListener( 'load', function ( event ) {
+		if ( cached !== undefined ) {
 
-				scope.manager.itemEnd( url );
-				onLoad( this );
-
-			}, false );
+			onLoad( cached );
+			return;
 
 		}
+
+		var image = document.createElement( 'img' );
+
+		image.addEventListener( 'load', function ( event ) {
+
+			THREE.Cache.add( url, this );
+
+			if ( onLoad ) onLoad( this );
+			
+			scope.manager.itemEnd( url );
+
+		}, false );
 
 		if ( onProgress !== undefined ) {
 

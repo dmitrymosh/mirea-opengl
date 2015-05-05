@@ -15,18 +15,28 @@ THREE.XHRLoader.prototype = {
 	load: function ( url, onLoad, onProgress, onError ) {
 
 		var scope = this;
-		var request = new XMLHttpRequest();
 
-		if ( onLoad !== undefined ) {
+		var cached = THREE.Cache.get( url );
 
-			request.addEventListener( 'load', function ( event ) {
+		if ( cached !== undefined ) {
 
-				onLoad( event.target.responseText );
-				scope.manager.itemEnd( url );
-
-			}, false );
+			if ( onLoad ) onLoad( cached );
+			return;
 
 		}
+
+		var request = new XMLHttpRequest();
+		request.open( 'GET', url, true );
+
+		request.addEventListener( 'load', function ( event ) {
+
+			THREE.Cache.add( url, this.response );
+
+			if ( onLoad ) onLoad( this.response );
+
+			scope.manager.itemEnd( url );
+
+		}, false );
 
 		if ( onProgress !== undefined ) {
 
@@ -49,11 +59,17 @@ THREE.XHRLoader.prototype = {
 		}
 
 		if ( this.crossOrigin !== undefined ) request.crossOrigin = this.crossOrigin;
+		if ( this.responseType !== undefined ) request.responseType = this.responseType;
 
-		request.open( 'GET', url, true );
 		request.send( null );
 
 		scope.manager.itemStart( url );
+
+	},
+
+	setResponseType: function ( value ) {
+
+		this.responseType = value;
 
 	},
 
