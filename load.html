@@ -30,7 +30,11 @@
 		<a href="http://threejs.org" target="_blank">three.js</a> - OBJLoader test
 		</div>
 
-		<script src="js/three.min.js"></script>
+		<script src="js/three.js"></script>
+        <script src="js/loaders/MTLLoader.js"></script>
+		<script src="js/loaders/OBJMTLLoader.js"></script>
+        <script src="js/Detector.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
 		<script>
 
@@ -99,21 +103,21 @@
 
 				// model
 
-				var loader = new THREE.OBJLoader( manager );
+				var loader = new THREE.OBJMTLLoader( manager );
 				//loader.load( 'obj/male02/male02.obj', function ( object ) {
-				loader.load( 'data/MIREA_Stage11.obj', function ( object ) {
+				loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
 
 					object.traverse( function ( child ) {
 
 						if ( child instanceof THREE.Mesh ) {
 
-							child.material.map = texture;
+							//child.material.map = texture;
 
 						}
 
 					} );
 
-					object.position.x = 100;
+					object.position.x = 0;
 					scene.add( object );
 
 				}, onProgress, onError );

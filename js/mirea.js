@@ -19,8 +19,8 @@ function init() {
     document.body.appendChild( container );
 
     camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200000 );
-    camera.position.y = 10000;
-    camera.position.z = 10000;
+    camera.position.y = 100;
+    camera.position.z = 100;
     //camera.position.y = 50000;                 
     
     
@@ -60,7 +60,7 @@ function init() {
 
     var texture = new THREE.Texture();
     var loader = new THREE.ImageLoader( manager );
-    loader.load( './data/clean.jpg', function ( image ) {
+    loader.load( './data/102.png', function ( image ) {
 
         texture.image = image;
         texture.needsUpdate = true;
@@ -82,10 +82,11 @@ function init() {
     texture1.repeat.set( 0.005, 0.005 );
     var PI2 = Math.PI * 2;
     
-    var loader = new THREE.OBJLoader();
-    loader.load( './data/mirea.obj', function ( object ) {
+    var loader = new THREE.OBJMTLLoader();
+    /*
+    loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
         //var str = "A0_1_floor_1_f000".replace(/_/g,".");
-        /*
+        / *
         При двойном щелчке на здании
         1. Приблизить
         2. Спрятать здание и поставить вместо него этажи (крыша не активна) 
@@ -94,7 +95,7 @@ function init() {
         1. Спрятать всё
         2. показать только план текущего этажа
         3. активны только полупрозрачные комнаты
-        */
+        * /
         var RE = /([\w\d]+)\.?/g;
         var level1 = /([\w\d]+)\.([\w\d]+)/;
         var level2 = /([\w\d]+)\.([\w\d]+)\.([\w\d]+)/;
@@ -136,7 +137,7 @@ function init() {
             }
         }
         
-        /*
+        / *
         var k = object.children.length;
         for(var i = 0; i < k; i++){
             if ( object.children[i] instanceof THREE.Mesh ) {
@@ -151,14 +152,30 @@ function init() {
             }
 
         }
-        */
+        * /
         /*
         for(var i = 0; i <  tmp_obj[0].length; i++){
             tmp_obj[0][i].visible = true;
             scene.add( tmp_obj[0][i] );
         }
-        */
-    } );
+        * /
+    } ); */
+    loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
+
+        object.traverse( function ( child ) {
+
+            if ( child instanceof THREE.Mesh ) {
+
+                //child.material.map = texture;
+
+            }
+
+        } );
+
+        object.position.x = 0;
+        scene.add( object );
+
+    });
 
     //controls = new THREE.PointerLockControls( camera );
     //controls = new THREE.OrbitControls( camera );
@@ -207,7 +224,8 @@ function onDocumentMouseMove( event ) {
     //mouse.x = ( event.clientX );
     //mouse.y = - ( event.clientY );
     var vector = new THREE.Vector3(  mouse.x, mouse.y, 1 );
-    projector.unprojectVector( vector, camera );
+    //projector.unprojectVector( vector, camera );
+    vector.unproject(camera);
 
     raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
 
@@ -316,19 +334,19 @@ function render() {
     renderer.render( scene, camera );
     
 }
-// поиск вершин, соединённых с данной
-// Vertice      номер вершины ( адрес в матрице смежности ) 
-// Length       номер текущего шага ( длинна уже пройденного маршрута )
-// AdjMatrix    матрица смежности ( квадратный массив )
-// Path         массив с пройденным путём ( линейный массив, каждый элемент которого состоит из номера вершины и длинны пути до неё )
-function ResolvePathStep( Vertice, Length, AdjMatrix, Path) {
-    // 1. Поиск смежной вершины в матрице смежности
-    // 2. вычисление пути до этой вершины
-    // 3. Поиск найденной вершины в масиве Path
-    // 4. Если вершина в массиве Path и путь до неё больше, чем вычесленный, заменить на вычесленный путь
-    // 5. Если вершины нет, добавить её 
-    // 6. отсортировать массив Path по возрастанию значения Length
-    // 7. повторить для всех смежных вершин
-    
-}
+
+/*
+B1L2TW
+
+Building 1
+Level 2
+Type Wall
+
+B1L2TF
+
+Building 1
+Level 2
+Type Floor
+
+*/
 
