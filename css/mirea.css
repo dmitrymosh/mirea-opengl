@@ -48,3 +48,68 @@ body {
     cursor: pointer;
 
 }
+ 
+#menu_bottom {
+	position: absolute;
+	bottom: 30px;
+	width: 100%;
+	height: 10%;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+
+#menu_left {
+	position: absolute;
+	left: 20px;
+	width: 120px;
+	height: 80%;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+#menu_right {
+	position: absolute;
+	right: 20px;
+	width: 100px;
+	height: 20%;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+#menu_left button {	
+	color: white;
+	background: transparent;	
+	padding: 5px 10px;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 10px 10px 10px 10px;
+	height: 15%;
+	width: 100%;
+}
+#menu_right button {	
+	color: white;
+	background: transparent;	
+	padding: 5px 10px;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 10px 10px 10px 10px;
+	height: 30px;
+	width: 100%;
+}
+#menu_bottom  button {	
+	color: white;
+	background: transparent;
+	padding: 5px 10px;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 10px 10px 10px 10px;
+	height: 100%;
+	width: 150px;
+}

@@ -8,20 +8,41 @@ var time = Date.now();
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 var mouse = new THREE.Vector2();
-
+var PI_2 = Math.PI / 2;
+var menu_bottom, menu_left; 
 //init();
 //animate();
-
+var buildings = {
+	"Корпус А": 1,
+	"Корпус Б": 2,
+	"Корпус В": 3,
+	"Корпус Г": 4,
+	"Корпус Д": 5,
+	"Библиотека": 6,
+	"Спортзал": 7,
+	"Актовый зал": 8,		
+};
+var levels = {
+	"Общий вид": "6",
+	"Уровень 5": "5",
+	"Уровень 4": "4",
+	"Уровень 3": "3",
+	"Уровень 2": "2",
+	"Уровень 1": "1",			
+};
+var commands = {
+	"Меню":1,		
+};	
 
 function init() {
 
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200000 );
-    camera.position.y = 100;
-    camera.position.z = 100;
-    //camera.position.y = 50000;                 
+    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 200000 );
+    camera.position.x = -10;
+    camera.position.z = 0;
+    camera.position.y = 10;                 
     
     
     // scene
@@ -31,8 +52,7 @@ function init() {
     camera.lookAt( scene.position );
     //scene.fog = new THREE.Fog( 0xffffff, 5000, 100000 );
     
-    var vector = new THREE.Vector3(0,0,0);
-    controls = new THREE.EditorControls( camera );
+	controls = new THREE.EditorControls( camera );
     
     renderer = new THREE.WebGLRenderer();
     renderer.setClearColor( 0xffffff );
@@ -43,7 +63,7 @@ function init() {
     scene.add( ambient );
 
     var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-    directionalLight.position.set( 0, 1, 1 );
+    directionalLight.position.set( 100, 100, 100 );
     scene.add( directionalLight );
 
     ray = new THREE.Raycaster();
@@ -82,7 +102,7 @@ function init() {
     texture1.repeat.set( 0.005, 0.005 );
     var PI2 = Math.PI * 2;
     
-    var loader = new THREE.OBJMTLLoader();
+    
     /*
     loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
         //var str = "A0_1_floor_1_f000".replace(/_/g,".");
@@ -160,19 +180,35 @@ function init() {
         }
         * /
     } ); */
-    loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
-
+	var regexp = /B([\d]+)L([\d]+)/; //T([\d]+)N([\d]+)/;
+	var loader = new THREE.OBJMTLLoader();
+	//var loader = new THREE.OBJLoader();
+    loader.load( 'data/mirea_hd.obj', 'data/mirea_hd.mtl', function ( object ) {
+	//loader.load( 'data/mirea_hd.obj', function ( object ) {
+	
         object.traverse( function ( child ) {
 
-            if ( child instanceof THREE.Mesh ) {
-
-                //child.material.map = texture;
-
+			if ( child instanceof THREE.Mesh ) {
+				var result = regexp.exec(child.name);
+				if(result){
+					child.userData.building = result[1];
+					child.userData.level = result[2];
+					child.userData.type = result[3];
+					child.userData.number = result[4];
+					//child.visible = false;
+				} else {
+					child.visible = false;
+				}               
+				
             }
 
         } );
 
-        object.position.x = 0;
+        //object.position.x = 0;
+		//var k = 
+		object.castShadow = true;
+		var vector = new THREE.Vector3(0,0,0);
+		object.rotation.x = -PI_2;
         scene.add( object );
 
     });
@@ -191,17 +227,79 @@ function init() {
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '0px';
-    container.appendChild( stats.domElement );
+    //container.appendChild( stats.domElement );
     document.body.appendChild( renderer.domElement );
-    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
     //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     //
 
     window.addEventListener( 'resize', onWindowResize, false );
     document.addEventListener( 'dblclick', onMouseDblClick, false );
-
+	createMenu();	
+	//hideMenu();
 }
+function hideMenu(){
+	
+	menu_bottom.hidden = ! menu_bottom.hidden;
+	menu_left.hidden = ! menu_left.hidden;
+}
+function createMenu() {
+	
+	menu_bottom = document.getElementById( "menu_bottom" );
+	for ( var m in buildings ) {
 
+		var button = document.createElement( 'button' );
+		button.innerHTML = m;
+		menu_bottom.appendChild( button );
+
+		//var url = "models/molecules/" +  MOLECULES[ m ];
+
+		//button.addEventListener( 'click', generateButtonCallback( url ), false );
+
+	}
+	menu_left = document.getElementById( "menu_left" );
+	for ( var m in levels ) {
+
+		var button = document.createElement( 'button' );
+		button.innerHTML = m;
+		menu_left.appendChild( button );
+
+		var url = levels[m];
+ 
+		button.addEventListener( 'click', onClickLeftMenu, false );
+		//button.onclick = "showLevel(" + url + " )"; 
+
+	}
+	menu_right = document.getElementById( "menu_right" );
+	for ( var m in commands ) {
+
+		var button = document.createElement( 'button' );
+		button.innerHTML = m;
+		menu_right.appendChild( button );
+
+		var url = commands[ m ];
+
+		button.addEventListener( 'click', function ( event ) { hideMenu(); }, false );
+
+	}
+}
+function onClickLeftMenu( event ) {
+	
+	m = event.currentTarget.innerHTML;
+	var level = levels[m];
+	scene.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Mesh ){
+			if(child.userData.level !== undefined) {
+				if(child.userData.level <= level){
+					child.visible = true;
+				} else {
+					child.visible = false;
+				}
+			}
+		}
+	} );
+}
 function onWindowResize() {
 
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -223,9 +321,9 @@ function onDocumentMouseMove( event ) {
     mouse.y = - ( (event.clientY) / window.innerHeight ) * 2 + 1;
     //mouse.x = ( event.clientX );
     //mouse.y = - ( event.clientY );
-    var vector = new THREE.Vector3(  mouse.x, mouse.y, 1 );
+    var vector = new THREE.Vector3(  1, mouse.x, mouse.y );
     //projector.unprojectVector( vector, camera );
-    vector.unproject(camera);
+    //vector.unproject(camera);
 
     raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
 
@@ -310,7 +408,7 @@ function animate() {
 
     requestAnimationFrame( animate );
     //controls.update();
-    render();	
+	render();	
     stats.update();                
 }
 
