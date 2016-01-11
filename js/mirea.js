@@ -50,7 +50,7 @@ function init() {
     
     scene = new THREE.Scene();
     camera.lookAt( scene.position );
-    //scene.fog = new THREE.Fog( 0xffffff, 5000, 100000 );
+    //scene.fog = new THREE.Fog( 0xffffff, 30, 50 );
     
 	controls = new THREE.EditorControls( camera );
     
@@ -101,7 +101,33 @@ function init() {
     texture1.wrapS = texture1.wrapT = THREE.RepeatWrapping;
     texture1.repeat.set( 0.005, 0.005 );
     var PI2 = Math.PI * 2;
-    
+    // Skybox
+	var path = "data/skybox/";
+	var format = '.jpg';
+	var urls = [
+		path + 'px' + format, path + 'nx' + format,
+		path + 'py' + format, path + 'ny' + format,
+		path + 'pz' + format, path + 'nz' + format
+	];
+
+	var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
+	var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.5 } );
+	var shader = THREE.ShaderLib[ "cube" ];
+	shader.uniforms[ "tCube" ].value = textureCube;
+
+	var material = new THREE.ShaderMaterial( {
+
+		fragmentShader: shader.fragmentShader,
+		vertexShader: shader.vertexShader,
+		uniforms: shader.uniforms,
+		depthWrite: false,
+		side: THREE.BackSide
+
+	} ),
+
+	mesh = new THREE.Mesh( new THREE.BoxGeometry( 1000, 1000, 1000 ), material );
+	mesh.position.y = 10;
+	scene.add( mesh );
     
     /*
     loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
@@ -197,7 +223,7 @@ function init() {
 					child.userData.number = result[4];
 					//child.visible = false;
 				} else {
-					child.visible = false;
+					child.visible = true;
 				}               
 				
             }
