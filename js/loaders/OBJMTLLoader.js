@@ -108,7 +108,17 @@ THREE.OBJMTLLoader.prototype = {
 				mesh = new THREE.Mesh( geometry, material );
 
 			}
-			if ( meshName !== undefined ) mesh.name = meshName;
+			if ( meshName !== undefined ) {
+                mesh.name = meshName;
+            } else {
+				geometry.vertices = vertices;
+
+				geometry.mergeVertices();
+				geometry.computeFaceNormals();
+				geometry.computeBoundingSphere();
+
+				object.add( mesh );
+            }
 			if ( materialName !== undefined ) {
 
 				material = new THREE.MeshLambertMaterial();

@@ -40,9 +40,9 @@ function init() {
     document.body.appendChild( container );
 
     camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 200000 );
-    camera.position.x = -10;
+    camera.position.x = -100;
     camera.position.z = 0;
-    camera.position.y = 10;                 
+    camera.position.y = 100;                 
     
     
     // scene
