@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 12.01.2016 00:17:18
+# File Created: 12.01.2016 20:32:15
 
 newmtl wire_086086086
 	Ns 32
@@ -153,7 +153,7 @@ newmtl wire_166229229
 	Kd 0.6510 0.8980 0.8980
 	Ks 0.3500 0.3500 0.3500
 
-newmtl Material__3
+newmtl Granite
 	Ns 25.0000
 	Ni 1.5000
 	d 1.0000
@@ -166,7 +166,6 @@ newmtl Material__3
 	Ke 0.0000 0.0000 0.0000
 	map_Ka Simple_Stone_Mtl_Granite_bump.jpg
 	map_Kd Simple_Stone_Mtl_Granite_bump.jpg
-	map_bump Simple_Stone_Mtl_Marble_bump.jpg
 
 newmtl wire_214229166
 	Ns 32
@@ -209,8 +208,8 @@ newmtl Linoleum
 	Kd 0.5000 0.5000 0.5000
 	Ks 0.0450 0.0450 0.0450
 	Ke 0.0000 0.0000 0.0000
-	map_Ka Finishes.Flooring.Wood.Parquet.1.jpg
-	map_Kd Finishes.Flooring.Wood.Parquet.1.jpg
+	map_Ka Finishes.Flooring.Wood.Parquet.12.jpg
+	map_Kd Finishes.Flooring.Wood.Parquet.12.jpg
 
 newmtl Material__2
 	Ns 25.0000
@@ -223,8 +222,8 @@ newmtl Material__2
 	Kd 0.5000 0.5000 0.5000
 	Ks 0.0450 0.0450 0.0450
 	Ke 0.0000 0.0000 0.0000
-	map_Ka hd_mirea.png
-	map_Kd hd_mirea.png
+	map_Ka hd_mirea.jpg
+	map_Kd hd_mirea.jpg
 
 newmtl wire_088144225
 	Ns 32
@@ -234,24 +233,4 @@ newmtl wire_088144225
 	illum 2
 	Ka 0.3451 0.5647 0.8824
 	Kd 0.3451 0.5647 0.8824
-	Ks 0.3500 0.3500 0.3500
-
-newmtl wire_008110135
-	Ns 32
-	d 1
-	Tr 0
-	Tf 1 1 1
-	illum 2
-	Ka 0.0314 0.4314 0.5294
-	Kd 0.0314 0.4314 0.5294
-	Ks 0.3500 0.3500 0.3500
-
-newmtl wire_000000000
-	Ns 32
-	d 1
-	Tr 0
-	Tf 1 1 1
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.0000 0.0000 0.0000
 	Ks 0.3500 0.3500 0.3500
