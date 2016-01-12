@@ -10,6 +10,9 @@ var windowHalfY = window.innerHeight / 2;
 var mouse = new THREE.Vector2();
 var PI_2 = Math.PI / 2;
 var menu_bottom, menu_left; 
+
+var SHADOW_MAP_WIDTH = 4096, SHADOW_MAP_HEIGHT = 4096;
+
 //init();
 //animate();
 var buildings = {
@@ -39,7 +42,7 @@ function init() {
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
-    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 200000 );
+    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
     camera.position.x = -100;
     camera.position.z = 0;
     camera.position.y = 100;                 
@@ -50,21 +53,57 @@ function init() {
     
     scene = new THREE.Scene();
     camera.lookAt( scene.position );
-    //scene.fog = new THREE.Fog( 0xffffff, 30, 50 );
+    //scene.fog = new THREE.Fog( 0xffffff, 300, 500 );
     
 	controls = new THREE.EditorControls( camera );
     
     renderer = new THREE.WebGLRenderer();
     renderer.setClearColor( 0xffffff );
     renderer.setSize( window.innerWidth, window.innerHeight );
+    //renderer.shadowMap.enabled = true;
+    //renderer.shadowMap.type = THREE.BasicShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     
     
-    var ambient = new THREE.AmbientLight( 0x707070 );
+    var ambient = new THREE.AmbientLight( 0x444444 );
     scene.add( ambient );
 
-    var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-    directionalLight.position.set( 100, 100, 100 );
-    scene.add( directionalLight );
+    // var directionalLight = new THREE.DirectionalLight( 0xFFEEDD );
+    // directionalLight.position.set( -500, 500, 500 );
+    // directionalLight.target = new THREE.Object3D();
+    // directionalLight.shadowMapWidth = 4096;
+    // directionalLight.shadowMapHeight = 4096;
+    // directionalLight.castShadow = true;
+
+    // var d = 2000;
+
+    // directionalLight.shadowCameraLeft = -d;
+    // directionalLight.shadowCameraRight = d;
+    // directionalLight.shadowCameraTop = d;
+    // directionalLight.shadowCameraBottom = -d;
+
+    // directionalLight.shadowCameraFar = 2000;
+    // scene.add( directionalLight );
+    
+    light = new THREE.SpotLight( 0xffffff, 1, 0, Math.PI / 2, 1 );
+    light.position.set( -1000, 1500, 1000 );
+    light.target.position.set( 0, 0, 0 );
+
+    light.castShadow = true;
+
+    //light.shadowCameraNear = 1200;
+    //light.shadowCameraFar = 2500;
+    //light.shadowCameraFov = 50;
+
+    //light.shadowCameraVisible = true;
+
+    //light.shadowBias = 0.0001;
+
+    light.shadowMapWidth = SHADOW_MAP_WIDTH;
+    light.shadowMapHeight = SHADOW_MAP_HEIGHT;
+
+    scene.add( light );
+
 
     ray = new THREE.Raycaster();
     ray.ray.direction.set( 0, -1, 0 );
@@ -128,84 +167,23 @@ function init() {
 	mesh = new THREE.Mesh( new THREE.BoxGeometry( 1000, 1000, 1000 ), material );
 	mesh.position.y = 10;
 	scene.add( mesh );
+    projector = new THREE.Projector();
+    raycaster = new THREE.Raycaster();
     
-    /*
-    loader.load( 'data/BAL2.obj', 'data/BAL2.mtl', function ( object ) {
-        //var str = "A0_1_floor_1_f000".replace(/_/g,".");
-        / *
-        При двойном щелчке на здании
-        1. Приблизить
-        2. Спрятать здание и поставить вместо него этажи (крыша не активна) 
-        3. Остальные здания остаются видимыми
-        При двойном щелчке на этаже
-        1. Спрятать всё
-        2. показать только план текущего этажа
-        3. активны только полупрозрачные комнаты
-        * /
-        var RE = /([\w\d]+)\.?/g;
-        var level1 = /([\w\d]+)\.([\w\d]+)/;
-        var level2 = /([\w\d]+)\.([\w\d]+)\.([\w\d]+)/;
-        var level3 = /([\w\d]+)\.([\w\d]+)\.([\w\d]+)\.([\w\d]+)/;
-        var level4 = /([\w\d]+)\.([\w\d]+)\.([\w\d]+)\.([\w\d]+)\.([\w\d]+)/;
+    stats = new Stats();
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.top = '0px';
+    container.appendChild( stats.domElement );
+    document.body.appendChild( renderer.domElement );
+    //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    //
 
-        var tmp_obj = [];
-        for(var i = 0; i < 4; i++){
-            tmp_obj[i] = [];
-        }
-        //return;
-        var k = object.children.length;
-        for(var i = 0; i < k; i++){
-            if ( object.children[i] instanceof THREE.Mesh ) {                            
-                //object.children[i].visible = false;
-                var name = object.children[i].name.replace(/_/g,".");
-                object.children[i].name = name;
-                if(/building/.test(name)){
-                    object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
-                } else if(/roof/.test(name)){
-                    object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
-                } else if(/level/.test(name)){
-                    object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
-                } else {
-                    object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF} );
-                }
-                if(level4.test(name)){
-                    tmp_obj[3].push(object.children[i]);
-                } else if(level3.test(name)){
-                    tmp_obj[2].push(object.children[i]);
-                } else if(level2.test(name)){
-                    tmp_obj[1].push(object.children[i]);
-                } else if(level1.test(name)){
-                    tmp_obj[0].push(object.children[i]);
-                }
-                scene.add( object.children[i] );
-                k = object.children.length;
-                i--;
-            }
-        }
-        
-        / *
-        var k = object.children.length;
-        for(var i = 0; i < k; i++){
-            if ( object.children[i] instanceof THREE.Mesh ) {
-                if(/floors|roof/.test(object.children[i].name)){
-                    object.children[i].material = new THREE.MeshPhongMaterial( { map: texture, color: 0xFFFFFF, ambient: 0xFFFFFF, opacity: 0.5 } );
-                    object.children[i].visible = false;
-                    objects.push ( object.children[i] );
-                    scene.add( object.children[i] );
-                    k = object.children.length;
-                    i--;
-                }
-            }
-
-        }
-        * /
-        /*
-        for(var i = 0; i <  tmp_obj[0].length; i++){
-            tmp_obj[0][i].visible = true;
-            scene.add( tmp_obj[0][i] );
-        }
-        * /
-    } ); */
+    window.addEventListener( 'resize', onWindowResize, false );
+    document.addEventListener( 'dblclick', onMouseDblClick, false );
+	createMenu();	
+	//hideMenu();
+    
 	var regexp = /B([\d]+)L([\d]+)/; //T([\d]+)N([\d]+)/;
 	var loader = new THREE.OBJMTLLoader();
 	//var loader = new THREE.OBJLoader();
@@ -225,14 +203,15 @@ function init() {
 				} else {
 					child.visible = true;
 				}               
-				
+				child.castShadow = true;
+                child.receiveShadow = true;
             }
 
         } );
 
         //object.position.x = 0;
 		//var k = 
-		object.castShadow = true;
+		
 		var vector = new THREE.Vector3(0,0,0);
 		object.rotation.x = -PI_2;
         scene.add( object );
@@ -245,24 +224,6 @@ function init() {
     //scene.add( controls.getObject() );
 
     //
-    
-   
-    projector = new THREE.Projector();
-    raycaster = new THREE.Raycaster();
-    
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    //container.appendChild( stats.domElement );
-    document.body.appendChild( renderer.domElement );
-    //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-    //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-    //
-
-    window.addEventListener( 'resize', onWindowResize, false );
-    document.addEventListener( 'dblclick', onMouseDblClick, false );
-	createMenu();	
-	//hideMenu();
 }
 function hideMenu(){
 	
