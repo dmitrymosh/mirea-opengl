@@ -12,6 +12,10 @@ var PI_2 = Math.PI / 2;
 var menu_bottom, menu_left; 
 
 var SHADOW_MAP_WIDTH = 4096, SHADOW_MAP_HEIGHT = 4096;
+var SCREEN_WIDTH = window.innerWidth;
+var SCREEN_HEIGHT = window.innerHeight;
+var rotatingObjects = [];
+var mixers = [];
 
 //init();
 //animate();
@@ -82,11 +86,19 @@ var callbackFinished = function ( result ) {
 
     $( "progress" ).style.display = "none";
 
-    //camera = loaded.currentCamera;
-    //camera.aspect = window.innerWidth / window.innerHeight;
-    //camera.updateProjectionMatrix();
-
+    camera = loaded.currentCamera;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+	
+	controls = new THREE.EditorControls( camera, renderer.domElement );
+	// controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
+	// controls.enableDamping = false;
+	// controls.dampingFactor = 0.25;
+	// controls.enableZoom = true;
+	
     scene = loaded.scene;
+	scene.add(createSkyBox());
+	createMenu();
 
 };
 function $( id ) {
@@ -97,178 +109,65 @@ function $( id ) {
 function init() {
 
     container = document.createElement( 'div' );
-    document.body.appendChild( container );
-    
-    THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
+	document.body.appendChild( container );
 
-        console.log( item, loaded, total );
+	var loadScene = createLoadScene();
 
-    };
-    var loadScene = createLoadScene();
-    
-    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.x = -100;
-    camera.position.z = 0;
-    camera.position.y = 100;                 
-    
-    
-    // scene
-    
-    
-    scene = new THREE.Scene();
-    camera.lookAt( scene.position );
-    //scene.fog = new THREE.Fog( 0xffffff, 300, 500 );
-    
-	controls = new THREE.EditorControls( camera );
-    
-    renderer = new THREE.WebGLRenderer();
-    renderer.setClearColor( 0xffffff );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    //renderer.shadowMap.enabled = true;
-    //renderer.shadowMap.type = THREE.BasicShadowMap;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
-    
-    
-    var ambient = new THREE.AmbientLight( 0x444444 );
-    scene.add( ambient );
+	camera = loadScene.camera;
+	scene = loadScene.scene;
 
-    // var directionalLight = new THREE.DirectionalLight( 0xFFEEDD );
-    // directionalLight.position.set( -500, 500, 500 );
-    // directionalLight.target = new THREE.Object3D();
-    // directionalLight.shadowMapWidth = 4096;
-    // directionalLight.shadowMapHeight = 4096;
-    // directionalLight.castShadow = true;
+	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	renderer.domElement.style.position = "relative";
+	container.appendChild( renderer.domElement );
 
-    // var d = 2000;
+	renderer.gammaInput = true;
+	renderer.gammaOutput = true;
 
-    // directionalLight.shadowCameraLeft = -d;
-    // directionalLight.shadowCameraRight = d;
-    // directionalLight.shadowCameraTop = d;
-    // directionalLight.shadowCameraBottom = -d;
-
-    // directionalLight.shadowCameraFar = 2000;
-    // scene.add( directionalLight );
-    
-    light = new THREE.SpotLight( 0xffffff, 1, 0, Math.PI / 2, 1 );
-    light.position.set( -1000, 1500, 1000 );
-    light.target.position.set( 0, 0, 0 );
-
-    light.castShadow = true;
-
-    //light.shadowCameraNear = 1200;
-    //light.shadowCameraFar = 2500;
-    //light.shadowCameraFov = 50;
-
-    //light.shadowCameraVisible = true;
-
-    //light.shadowBias = 0.0001;
-
-    light.shadowMapWidth = SHADOW_MAP_WIDTH;
-    light.shadowMapHeight = SHADOW_MAP_HEIGHT;
-
-    scene.add( light );
-
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.top = '0px';
+	stats.domElement.style.right = '0px';
+	stats.domElement.style.zIndex = 100;
+	container.appendChild( stats.domElement );
+	
 
     ray = new THREE.Raycaster();
     ray.ray.direction.set( 0, -1, 0 );
-
-    // model
-    var maxAnisotropy = renderer.getMaxAnisotropy();
-    //var texture1 = THREE.ImageUtils.loadTexture( "./Stone.1.jpg" );
     
-    var manager = new THREE.LoadingManager();
-    manager.onProgress = function ( item, loaded, total ) {
-        console.log( item, loaded, total );
-    };
-
-    var texture = new THREE.Texture();
-    var loader = new THREE.ImageLoader( manager );
-    loader.load( './data/102.png', function ( image ) {
-
-        texture.image = image;
-        texture.needsUpdate = true;
-
-    } );
-    texture.anisotropy = maxAnisotropy;
-    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set( 0.01, 0.01 );
-    
-    var texture1 = new THREE.Texture();
-    loader.load( './data/Finishes.Flooring.Wood.Parquet.1.jpg', function ( image ) {
-
-        texture1.image = image;
-        texture1.needsUpdate = true;
-
-    } );
-    texture1.anisotropy = maxAnisotropy;
-    texture1.wrapS = texture1.wrapT = THREE.RepeatWrapping;
-    texture1.repeat.set( 0.005, 0.005 );
-    var PI2 = Math.PI * 2;
-    // Skybox
-	var path = "data/skybox/";
-	var format = '.jpg';
-	var urls = [
-		path + 'px' + format, path + 'nx' + format,
-		path + 'py' + format, path + 'ny' + format,
-		path + 'pz' + format, path + 'nz' + format
-	];
-
-	var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
-	var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.5 } );
-	var shader = THREE.ShaderLib[ "cube" ];
-	shader.uniforms[ "tCube" ].value = textureCube;
-
-	var material = new THREE.ShaderMaterial( {
-
-		fragmentShader: shader.fragmentShader,
-		vertexShader: shader.vertexShader,
-		uniforms: shader.uniforms,
-		depthWrite: false,
-		side: THREE.BackSide
-
-	} ),
-
-	mesh = new THREE.Mesh( new THREE.BoxGeometry( 1000, 1000, 1000 ), material );
-	mesh.position.y = 10;
-	scene.add( mesh );
     projector = new THREE.Projector();
     raycaster = new THREE.Raycaster();
     
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '0px';
-    container.appendChild( stats.domElement );
-    document.body.appendChild( renderer.domElement );
-    //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-    //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-    //
+    
 
-    window.addEventListener( 'resize', onWindowResize, false );
-    document.addEventListener( 'dblclick', onMouseDblClick, false );
-	createMenu();	
+    $( "progress" ).style.display = "block";
+
+	THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
+	var loader = new THREE.SceneLoader();
+
+	loader.addGeometryHandler( "binary", THREE.BinaryLoader );
+	loader.addGeometryHandler( "ctm", THREE.CTMLoader );
+	loader.addGeometryHandler( "vtk", THREE.VTKLoader );
+	loader.addGeometryHandler( "stl", THREE.STLLoader );
+
+	loader.addHierarchyHandler( "obj", THREE.OBJLoader );
+	loader.addHierarchyHandler( "dae", THREE.ColladaLoader );
+	loader.addHierarchyHandler( "utf8", THREE.UTF8Loader );
+
+	loader.callbackProgress = callbackProgress;
+
+	loader.load( "scenes/test_scene.js", callbackFinished );
+
+	//
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	
+	//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		
 	//hideMenu();
-    
-
-    THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
-
-    var loader = new THREE.SceneLoader();
-
-    loader.addGeometryHandler( "binary", THREE.BinaryLoader );
-    loader.addGeometryHandler( "ctm", THREE.CTMLoader );
-    loader.addGeometryHandler( "vtk", THREE.VTKLoader );
-    loader.addGeometryHandler( "stl", THREE.STLLoader );
-
-    loader.addHierarchyHandler( "obj", THREE.OBJLoader );
-    loader.addHierarchyHandler( "dae", THREE.ColladaLoader );
-    loader.addHierarchyHandler( "utf8", THREE.UTF8Loader );
-
-    loader.callbackProgress = callbackProgress;
-
-    loader.load( "data/test_scene.js", callbackFinished );
-
-    
-    
-    
+        
 	//var regexp = /B([\d]+)L([\d]+)/; //T([\d]+)N([\d]+)/;
 	//var loader = new THREE.OBJMTLLoader();
 	//var loader = new THREE.OBJLoader();
@@ -303,12 +202,38 @@ function init() {
 
     // });
 
-    //controls = new THREE.PointerLockControls( camera );
-    //controls = new THREE.OrbitControls( camera );
-    //controls.addEventListener( 'change', render );
-    //scene.add( controls.getObject() );
-
+    
     //
+	
+	//hideMenu();
+}
+function createSkyBox(){
+	// Skybox
+	var path = "data/skybox/";
+	var format = '.jpg';
+	var urls = [
+		path + 'px' + format, path + 'nx' + format,
+		path + 'py' + format, path + 'ny' + format,
+		path + 'pz' + format, path + 'nz' + format
+	];
+
+	var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
+	var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.5 } );
+	var shader = THREE.ShaderLib[ "cube" ];
+	shader.uniforms[ "tCube" ].value = textureCube;
+
+	var material = new THREE.ShaderMaterial( {
+
+		fragmentShader: shader.fragmentShader,
+		vertexShader: shader.vertexShader,
+		uniforms: shader.uniforms,
+		depthWrite: false,
+		side: THREE.BackSide
+
+	} );
+	mesh = new THREE.Mesh( new THREE.BoxGeometry( 1000, 1000, 1000 ), material );
+	mesh.position.y = 10;
+	return mesh;
 }
 function createLoadScene() {
 
@@ -365,7 +290,9 @@ function hideMenu(){
 }
 function createMenu() {
 	
-	menu_bottom = document.getElementById( "menu_bottom" );
+	menu_bottom = document.createElement( 'div' );
+	document.body.appendChild( menu_bottom );
+	menu_bottom.id = "menu_bottom" ;
 	for ( var m in buildings ) {
 
 		var button = document.createElement( 'button' );
@@ -377,7 +304,10 @@ function createMenu() {
 		//button.addEventListener( 'click', generateButtonCallback( url ), false );
 
 	}
-	menu_left = document.getElementById( "menu_left" );
+	menu_left = document.createElement( 'div' );
+	document.body.appendChild( menu_left );
+	menu_left.id = "menu_left" ;
+	
 	for ( var m in levels ) {
 
 		var button = document.createElement( 'button' );
@@ -390,7 +320,10 @@ function createMenu() {
 		//button.onclick = "showLevel(" + url + " )"; 
 
 	}
-	menu_right = document.getElementById( "menu_right" );
+	
+	menu_right = document.createElement( 'div' );
+	document.body.appendChild( menu_right );
+	menu_right.id = "menu_right" ;
 	for ( var m in commands ) {
 
 		var button = document.createElement( 'button' );
@@ -427,7 +360,7 @@ function onWindowResize() {
 
     renderer.setSize( window.innerWidth, window.innerHeight );
 
-    //controls.handleResize();
+    controls.handleResize();
 
     render();
 
