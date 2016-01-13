@@ -36,12 +36,71 @@ var levels = {
 var commands = {
 	"Меню":1,		
 };	
+var callbackProgress = function( progress, result ) {
 
+    var bar = 250,
+        total = progress.totalModels + progress.totalTextures,
+        loaded = progress.loadedModels + progress.loadedTextures;
+
+    if ( total )
+        bar = Math.floor( bar * loaded / total );
+
+    $( "bar" ).style.width = bar + "px";
+
+};
+
+var callbackFinished = function ( result ) {
+
+    loaded = result;
+
+    $( "message" ).style.display = "none";
+    $( "progressbar" ).style.display = "none";
+
+    result.scene.traverse( function ( object ) {
+
+        if ( object.userData.rotating === true ) {
+
+            rotatingObjects.push( object );
+
+        }
+
+        if ( object instanceof THREE.Mesh ) {
+
+            if( object.geometry && object.geometry.animations && object.geometry.animations.length > 0 ) {
+
+                var mixer = new THREE.AnimationMixer( object );
+                mixer.addAction( new THREE.AnimationAction( object.geometry.animations[0] ) );
+                mixers.push( mixer );
+
+            }
+
+        }
+
+    } );
+
+    //
+
+    $( "progress" ).style.display = "none";
+
+    camera = loaded.currentCamera;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    scene = loaded.scene;
+
+};
 function init() {
 
     container = document.createElement( 'div' );
     document.body.appendChild( container );
+    
+    THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
 
+        console.log( item, loaded, total );
+
+    };
+    var loadScene = createLoadScene();
+    
     camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
     camera.position.x = -100;
     camera.position.z = 0;
@@ -172,7 +231,7 @@ function init() {
     
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
+    stats.domElement.style.left = '0px';
     container.appendChild( stats.domElement );
     document.body.appendChild( renderer.domElement );
     //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -184,39 +243,49 @@ function init() {
 	createMenu();	
 	//hideMenu();
     
+    var loader = new THREE.SceneLoader();
+
+    loader.addGeometryHandler( "binary", THREE.BinaryLoader );
+    loader.addHierarchyHandler( "obj", THREE.OBJLoader );
+
+    loader.callbackProgress = callbackProgress;
+
+    loader.addGeometryHandler( "binary", THREE.BinaryLoader );
+    loader.load( "data/test_scene.js", callbackFinished );
+    
 	var regexp = /B([\d]+)L([\d]+)/; //T([\d]+)N([\d]+)/;
 	var loader = new THREE.OBJMTLLoader();
 	//var loader = new THREE.OBJLoader();
-    loader.load( 'data/mirea_hd.obj', 'data/mirea_hd.mtl', function ( object ) {
-	//loader.load( 'data/mirea_hd.obj', function ( object ) {
+    // loader.load( 'data/mirea_hd.obj', 'data/mirea_hd.mtl', function ( object ) {
+	// //loader.load( 'data/mirea_hd.obj', function ( object ) {
 	
-        object.traverse( function ( child ) {
+        // object.traverse( function ( child ) {
 
-			if ( child instanceof THREE.Mesh ) {
-				var result = regexp.exec(child.name);
-				if(result){
-					child.userData.building = result[1];
-					child.userData.level = result[2];
-					child.userData.type = result[3];
-					child.userData.number = result[4];
-					//child.visible = false;
-				} else {
-					child.visible = true;
-				}               
-				child.castShadow = true;
-                child.receiveShadow = true;
-            }
+			// if ( child instanceof THREE.Mesh ) {
+				// var result = regexp.exec(child.name);
+				// if(result){
+					// child.userData.building = result[1];
+					// child.userData.level = result[2];
+					// child.userData.type = result[3];
+					// child.userData.number = result[4];
+					// //child.visible = false;
+				// } else {
+					// child.visible = true;
+				// }               
+				// child.castShadow = true;
+                // child.receiveShadow = true;
+            // }
 
-        } );
+        // } );
 
-        //object.position.x = 0;
-		//var k = 
+        // //object.position.x = 0;
+		// //var k = 
 		
-		var vector = new THREE.Vector3(0,0,0);
-		object.rotation.x = -PI_2;
-        scene.add( object );
+		// var vector = new THREE.Vector3(0,0,0);
+		// object.rotation.x = -PI_2;
+        // scene.add( object );
 
-    });
+    // });
 
     //controls = new THREE.PointerLockControls( camera );
     //controls = new THREE.OrbitControls( camera );
@@ -224,6 +293,54 @@ function init() {
     //scene.add( controls.getObject() );
 
     //
+}
+function createLoadScene() {
+
+    var result = {
+
+        scene:  new THREE.Scene(),
+        camera: new THREE.PerspectiveCamera( 65, window.innerWidth / window.innerHeight, 1, 1000 )
+
+    };
+
+    result.camera.position.z = 100;
+    result.scene.add( result.camera );
+
+    var object, geometry, material, light, count = 500, range = 200;
+
+    material = new THREE.MeshLambertMaterial( { color:0xffffff } );
+    geometry = new THREE.BoxGeometry( 5, 5, 5 );
+
+    for( var i = 0; i < count; i++ ) {
+
+        object = new THREE.Mesh( geometry, material );
+
+        object.position.x = ( Math.random() - 0.5 ) * range;
+        object.position.y = ( Math.random() - 0.5 ) * range;
+        object.position.z = ( Math.random() - 0.5 ) * range;
+
+        object.rotation.x = Math.random() * 6;
+        object.rotation.y = Math.random() * 6;
+        object.rotation.z = Math.random() * 6;
+
+        object.matrixAutoUpdate = false;
+        object.updateMatrix();
+
+        result.scene.add( object );
+
+    }
+
+    result.scene.matrixAutoUpdate = false;
+
+    light = new THREE.PointLight( 0xffffff );
+    result.scene.add( light );
+
+    light = new THREE.DirectionalLight( 0x111111 );
+    light.position.x = 1;
+    result.scene.add( light );
+
+    return result;
+
 }
 function hideMenu(){
 	
