@@ -11,7 +11,7 @@
 
         "man" : {
             "type": "obj",
-            "url" : "obj/male02/male02.obj",
+            "url" : "data/mirea.obj",
             "material" : "phong_man",
             "position" : [ -10, -10, -25 ],
             "rotation" : [ 0, 0, 0 ],

@@ -94,8 +94,8 @@ THREE.OBJMTLLoader.prototype = {
 
 		function meshN( meshName, materialName ) {
 
-			if ( ( vertices.length > 0 ) && ( meshName !== undefined )) {
-				
+			if ( vertices.length > 0 ) {
+
 				geometry.vertices = vertices;
 
 				geometry.mergeVertices();
@@ -108,17 +108,9 @@ THREE.OBJMTLLoader.prototype = {
 				mesh = new THREE.Mesh( geometry, material );
 
 			}
-			if ( meshName !== undefined ) {
-                mesh.name = meshName;
-            } else {
-				geometry.vertices = vertices;
 
-				geometry.mergeVertices();
-				geometry.computeFaceNormals();
-				geometry.computeBoundingSphere();
+			if ( meshName !== undefined ) mesh.name = meshName;
 
-				object.add( mesh );
-            }
 			if ( materialName !== undefined ) {
 
 				material = new THREE.MeshLambertMaterial();
@@ -245,8 +237,6 @@ THREE.OBJMTLLoader.prototype = {
 		var face_pattern4 = /f( +(\d+)\/\/(\d+))( +(\d+)\/\/(\d+))( +(\d+)\/\/(\d+))( +(\d+)\/\/(\d+))?/;
 
 		//
-		
-		var name_pattern = /# object ([\w\d]+)/;
 
 		var lines = data.split( "\n" );
 
@@ -256,11 +246,8 @@ THREE.OBJMTLLoader.prototype = {
 			line = line.trim();
 
 			var result;
-			if ( ( result = name_pattern.exec( line ) ) !== null ) {
-				
-				meshN( result[ 1 ], undefined );
-				
-			} else if ( line.length === 0 || line.charAt( 0 ) === '#' ) {
+
+			if ( line.length === 0 || line.charAt( 0 ) === '#' ) {
 
 				continue;
 
@@ -343,7 +330,7 @@ THREE.OBJMTLLoader.prototype = {
 
 				// group
 
-				//meshN( line.substring( 2 ).trim(), undefined );
+				meshN( line.substring( 2 ).trim(), undefined );
 
 			} else if ( /^usemtl /.test( line ) ) {
 

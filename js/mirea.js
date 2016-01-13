@@ -82,13 +82,18 @@ var callbackFinished = function ( result ) {
 
     $( "progress" ).style.display = "none";
 
-    camera = loaded.currentCamera;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    //camera = loaded.currentCamera;
+    //camera.aspect = window.innerWidth / window.innerHeight;
+    //camera.updateProjectionMatrix();
 
     scene = loaded.scene;
 
 };
+function $( id ) {
+
+    return document.getElementById( id );
+
+}
 function init() {
 
     container = document.createElement( 'div' );
@@ -243,18 +248,29 @@ function init() {
 	createMenu();	
 	//hideMenu();
     
+
+    THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
     var loader = new THREE.SceneLoader();
 
     loader.addGeometryHandler( "binary", THREE.BinaryLoader );
+    loader.addGeometryHandler( "ctm", THREE.CTMLoader );
+    loader.addGeometryHandler( "vtk", THREE.VTKLoader );
+    loader.addGeometryHandler( "stl", THREE.STLLoader );
+
     loader.addHierarchyHandler( "obj", THREE.OBJLoader );
+    loader.addHierarchyHandler( "dae", THREE.ColladaLoader );
+    loader.addHierarchyHandler( "utf8", THREE.UTF8Loader );
 
     loader.callbackProgress = callbackProgress;
 
-    loader.addGeometryHandler( "binary", THREE.BinaryLoader );
     loader.load( "data/test_scene.js", callbackFinished );
+
     
-	var regexp = /B([\d]+)L([\d]+)/; //T([\d]+)N([\d]+)/;
-	var loader = new THREE.OBJMTLLoader();
+    
+    
+	//var regexp = /B([\d]+)L([\d]+)/; //T([\d]+)N([\d]+)/;
+	//var loader = new THREE.OBJMTLLoader();
 	//var loader = new THREE.OBJLoader();
     // loader.load( 'data/mirea_hd.obj', 'data/mirea_hd.mtl', function ( object ) {
 	// //loader.load( 'data/mirea_hd.obj', function ( object ) {

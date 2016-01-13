@@ -9,16 +9,37 @@
 	</head>
 
 	<body>		
+        <div id="progress">
+			<span id="message">Loading ...</span>
 
+			<center>
+				<div id="progressbar" class="shadow"><div id="bar" class="shadow"></div></div>
+			</center>
+		</div>
 		<script src="./js/three.min.js"></script>
-		<script src="./js/loaders/MTLLoader.js"></script>
-		<script src="./js/loaders/OBJMTLLoader.js"></script>
-		<script src="./js/loaders/OBJLoader.js"></script>
+		<script src="js/MorphAnimMesh.js"></script>
+		<script src="js/loaders/collada/Animation.js"></script>
+		<script src="js/loaders/collada/AnimationHandler.js"></script>
+		<script src="js/loaders/collada/KeyFrameAnimation.js"></script>
+
+		<script src="js/loaders/DDSLoader.js"></script>
+
+		<script src="js/loaders/ctm/lzma.js"></script>
+		<script src="js/loaders/ctm/ctm.js"></script>
+		<script src="js/loaders/ctm/CTMLoader.js"></script>
+
+		<script src="js/loaders/SceneLoader.js"></script>
+		<script src="js/loaders/BinaryLoader.js"></script>
+		<script src="js/loaders/OBJLoader.js"></script>
+		<script src="js/loaders/VTKLoader.js"></script>
+		<script src="js/loaders/STLLoader.js"></script>
+		<script src="js/loaders/ColladaLoader.js"></script>
+		<script src="js/loaders/UTF8Loader.js"></script>
+		<script src="js/loaders/MTLLoader.js"></script>
+        
         <script src="./js/renderers/Projector.js"></script>
 		<script src="./js/libs/stats.min.js"></script>
         <script src="./js/controls/EditorControls.js"></script>
-        <script src="./js/loaders/SceneLoader.js"></script>
-        <script src="./js/loaders/LoadingManager.js"></script>
         <script src="./js/mirea.js"></script>
 		<div id="menu_left"></div>
 		<div id="menu_bottom"></div>
