@@ -8,18 +8,28 @@
 	"urlBaseType" : "relativeToHTML",
 
 	"objects": {
-		"mirea" : {
-			"type": "obj",
-			"url" : "data/mirea_hd.obj",
-			"material" : "faceted_white",
+		"mirea" : {	
 			"position" : [ 0, 0, 0 ],
 			"rotation" : [ -1.57079, 0, 0 ],
-			"scale"	   : [ 1, 1, 1 ],
-			"visible"  : true,	
-			"castShadow" : true,
-			"receiveShadow" : true,
+			"scale"	   : [ 1, 1, 1 ],		
+			"userData" : {
+				"building" : 4,
+				"level" : 2
+			},
+			"visible"  : true,
 			"children" : {
-				
+				"tt" : {
+					"type": "obj",
+					"url" : "data/mirea_hd.obj",
+					"material" : "faceted_white",
+					"position" : [ 0, 0, 0 ],
+					"rotation" : [ 0, 0, 0 ],
+					"scale"	   : [ 1, 1, 1 ],
+					"visible"  : true,	
+					"castShadow" : true,
+					"receiveShadow" : true
+					
+				}	
 			}
 		},
 		

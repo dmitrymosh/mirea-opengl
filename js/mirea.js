@@ -342,13 +342,11 @@ function onClickLeftMenu( event ) {
 	var level = levels[m];
 	scene.traverse( function ( child ) {
 
-		if ( child instanceof THREE.Mesh ){
-			if(child.userData.level !== undefined) {
-				if(child.userData.level <= level){
-					child.visible = true;
-				} else {
-					child.visible = false;
-				}
+		if(child.userData.level !== undefined) {
+			if(child.userData.level <= level){
+				child.visible = true;
+			} else {
+				child.visible = false;
 			}
 		}
 	} );
