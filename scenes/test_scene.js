@@ -624,7 +624,7 @@
 	},
 	"textures": {
 		"mirea_ground": {
-			"url": "data/hd_mirea.png",
+			"url": "data/hd_mirea.jpg",
 			"anisotropy": 4
 		}
 	},
