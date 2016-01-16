@@ -31,11 +31,11 @@ var buildings = {
 };
 var levels = {
 	"Общий вид": "6",
-	"Уровень 5": "5",
+	//"Уровень 5": "5",
 	"Уровень 4": "4",
 	"Уровень 3": "3",
 	"Уровень 2": "2",
-	"Уровень 1": "1",			
+	"Уровень 1": "1"			
 };
 var commands = {
 	"Меню":1,		
@@ -88,19 +88,16 @@ var callbackFinished = function ( result ) {
 
     camera = loaded.currentCamera;
     camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-	camera.center = new THREE.Vector3( -154, 0, 87 );
+    camera.updateProjectionMatrix();	
 	controls = new THREE.EditorControls( camera, renderer.domElement );
-   
-	// controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
-	// controls.enableDamping = false;
-	// controls.dampingFactor = 0.25;
-	// controls.enableZoom = true;
-	scene.add(createSkyBox());
+	controls.center = new THREE.Vector3( -154, 0, 87 );
+	var obj;
+		
     scene = loaded.scene;
-	
+	scene.add(createSkyBox());
 	createMenu();
-
+	
+	
 };
 function $( id ) {
 
@@ -292,6 +289,7 @@ function hideMenu(){
 function createMenu() {
 	
 	menu_bottom = document.createElement( 'div' );
+	//menu_bottom.domElement.style.zIndex = 100;
 	document.body.appendChild( menu_bottom );
 	menu_bottom.id = "menu_bottom" ;
 	for ( var m in buildings ) {
@@ -306,6 +304,7 @@ function createMenu() {
 
 	}
 	menu_left = document.createElement( 'div' );
+	//menu_left.domElement.style.zIndex = 100;
 	document.body.appendChild( menu_left );
 	menu_left.id = "menu_left" ;
 	
@@ -323,6 +322,7 @@ function createMenu() {
 	}
 	
 	menu_right = document.createElement( 'div' );
+	//menu_right .domElement.style.zIndex = 100;
 	document.body.appendChild( menu_right );
 	menu_right.id = "menu_right" ;
 	for ( var m in commands ) {
