@@ -17,13 +17,13 @@
             "visible"  : true			
         },	
 		"mirea" : {	            
-			"position" : [ -40, 0, 77 ],
+			"position" : [ 0, 0, 0, -40, 0, 77 ],
 			"rotation" : [ -1.57, 0, 0 ],
 			"scale"	   : [ 1, 1, 1 ],	
 			"visible"  : true,
 			"children" : {				
 				"build1" : {
-					"position" : [ -72.445, -177.962, 0 ],
+					"position" : [ -72.445, -177.962, 4 ],
 					"rotation" : [ 0, 0, 0 ],
 					"scale"	   : [ 1, 1, 1 ],
 					"visible"  : true,	
@@ -44,7 +44,7 @@
 									"type": "obj",
 									"url" : "data/B1L1.obj",
 									"material" : "faceted_white1",
-									"position" : [ 0, 0, 4 ],
+									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true
@@ -64,13 +64,33 @@
 									"type": "obj",
 									"url" : "data/B1L2.obj",
 									"material" : "faceted_white2",
-									"position" : [ 0, 0, 8 ],
+									"position" : [ 0, 0, 4 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								}
 							}
-						}			
+						},
+						"B1L3" : {
+							"position" : [ 0, 0, 0 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 4
+							},
+							"children" : {
+								"level3" : {
+									"type": "obj",
+									"url" : "data/B1L3.obj",
+									"material" : "faceted_white2",
+									"position" : [ 0, 0, 9 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								}
+							}
+						}				
 					}
 				},
 				"build4" : {
@@ -665,7 +685,7 @@
 			"mapping": "CubeRefractionMapping"
 		},
         "mirea_ground": {
-			"url": "data/mirea.jpg",
+			"url": "data/hd_mirea.jpg",
 			"anisotropy": 4
 		}
 	},
@@ -682,8 +702,8 @@
 		},
 		"plane": {
 			"type"   : "plane",
-			"width"  : 690,
-			"height" : 690,
+			"width"  : 585,
+			"height" : 434,
 			"widthSegments"  : 50,
 			"heightSegments" : 50
 		}
