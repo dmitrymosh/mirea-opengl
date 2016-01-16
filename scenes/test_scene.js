@@ -7,21 +7,21 @@
 
 	"urlBaseType" : "relativeToHTML",
 
-	"objects": {		
-		"mirea" : {	
-			"position" : [ 0, 0, 0 ],
+	"objects": {	
+        "ground" : {
+            "geometry" : "plane",
+            "material" : "mirea_ground",
+            "position" : [ 0, 0, 0 ],
+            "rotation" : [ -1.57, 0, 0 ],
+            "scale"	   : [ 1, 1, 1 ],	
+            "visible"  : true			
+        },	
+		"mirea" : {	            
+			"position" : [ -40, 0, 77 ],
 			"rotation" : [ -1.57, 0, 0 ],
 			"scale"	   : [ 1, 1, 1 ],	
 			"visible"  : true,
-			"children" : {
-				"ground" : {
-					"geometry" : "plane",
-					"material" : "mirea_ground",
-					"position" : [ 0, 0, 0 ],
-					"rotation" : [ 0, 0, 0 ],
-					"scale"	   : [ 1, 1, 1 ],	
-					"visible"  : true			
-				},
+			"children" : {				
 				"build1" : {
 					"position" : [ -72.445, -177.962, 0 ],
 					"rotation" : [ 0, 0, 0 ],
@@ -436,7 +436,7 @@
 							}
 						},
 						"B5L2" : {
-							"position" : [ 0, 0, 0 ],
+							"position" : [ 0, 0, 4 ],
 							"rotation" : [ 0, 0, 0 ],
 							"scale"	   : [ 1, 1, 1 ],
 							"visible"  : true,	
@@ -448,7 +448,7 @@
 									"type": "obj",
 									"url" : "data/B5L2.obj",
 									"material" : "faceted_white2",
-									"position" : [ 0, 0, 4 ],
+									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -468,7 +468,7 @@
 									"type": "obj",
 									"url" : "data/B5L3.obj",
 									"material" : "faceted_white3",
-									"position" : [ 0, 0, 8 ],
+									"position" : [ 0, 0, 4 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -488,7 +488,7 @@
 									"type": "obj",
 									"url" : "data/B5L4.obj",
 									"material" : "faceted_white4",
-									"position" : [ 0, 0, 12 ],
+									"position" : [ 0, 0, 8 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -508,7 +508,7 @@
 									"type": "obj",
 									"url" : "data/B5L5.obj",
 									"material" : "faceted_white4",
-									"position" : [ 0, 0, 16 ],
+									"position" : [ 0, 0, 12 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -516,7 +516,69 @@
 							}
 						}							
 					}
-				}
+				},
+                "build6" : {
+					"position" : [ -177.751, 54.699, 4 ],
+					"rotation" : [ 0, 0, 0.645 ],
+					"scale"	   : [ 1, 1, 1 ],
+					"visible"  : true,	
+					"userData" : {
+						"building" : 6
+					},
+					"children" : {
+						"B6L1" : {
+							"position" : [ 0, 0, 0 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 2
+							},
+							"children" : {
+								"level1" : {
+									"type": "obj",
+									"url" : "data/B6L1.obj",
+									"material" : "faceted_white1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true
+								}
+							}
+						}
+                    }
+                },
+                "build7" : {
+					"position" : [ -137.016, -61.075, 4 ],
+					"rotation" : [ 0, 0, 0 ],
+					"scale"	   : [ 1, 1, 1 ],
+					"visible"  : true,	
+					"userData" : {
+						"building" : 7
+					},
+					"children" : {
+						"B7L1" : {
+							"position" : [ 0, 0, 0 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 3
+							},
+							"children" : {
+								"level1" : {
+									"type": "obj",
+									"url" : "data/B7L1.obj",
+									"material" : "faceted_white1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true
+								}
+							}
+						}
+                    }
+                }
 			}
 		},
 
@@ -541,8 +603,8 @@
 			"aspect": 1.33333,
 			"near"  : 1,
 			"far"   : 2000,
-			"position": [ -100, 100, 0 ],
-			"target"  : [ 0, 0, 0 ]
+			"position": [ -300, 300, 300 ], 
+			"target"  : [ -154, 0, 87 ]
 		}
 
 	},
@@ -601,6 +663,10 @@
 				"data/skybox/nz.jpg"
 			],
 			"mapping": "CubeRefractionMapping"
+		},
+        "mirea_ground": {
+			"url": "data/mirea.jpg",
+			"anisotropy": 4
 		}
 	},
 	"geometries": {
@@ -616,18 +682,12 @@
 		},
 		"plane": {
 			"type"   : "plane",
-			"width"  : 585,
-			"height" : 434,
+			"width"  : 690,
+			"height" : 690,
 			"widthSegments"  : 50,
 			"heightSegments" : 50
 		}
-	},
-	"textures": {
-		"mirea_ground": {
-			"url": "data/hd_mirea.jpg",
-			"anisotropy": 4
-		}
-	},
+	},	
 		
 	"fogs":	{
 		"basic": {

@@ -89,15 +89,16 @@ var callbackFinished = function ( result ) {
     camera = loaded.currentCamera;
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-	
+	camera.center = new THREE.Vector3( -154, 0, 87 );
 	controls = new THREE.EditorControls( camera, renderer.domElement );
+   
 	// controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
 	// controls.enableDamping = false;
 	// controls.dampingFactor = 0.25;
 	// controls.enableZoom = true;
-	
-    scene = loaded.scene;
 	scene.add(createSkyBox());
+    scene = loaded.scene;
+	
 	createMenu();
 
 };
@@ -364,97 +365,6 @@ function onWindowResize() {
 
 }
 
-function onDocumentMouseMove( event ) {
-
-    event.preventDefault();
-
-    mouse.x = ( ( event.clientX) / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( (event.clientY) / window.innerHeight ) * 2 + 1;
-    //mouse.x = ( event.clientX );
-    //mouse.y = - ( event.clientY );
-    var vector = new THREE.Vector3(  1, mouse.x, mouse.y );
-    //projector.unprojectVector( vector, camera );
-    //vector.unproject(camera);
-
-    raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
-
-    var intersects = raycaster.intersectObjects( scene.children );
-    
-    if ( intersects.length > 0 ) {
-
-        if ( INTERSECTED != intersects[ 0 ].object ) {
-
-            if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-
-            INTERSECTED = intersects[ 0 ].object;
-            INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-            INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex + 0x7F7F7F );
-        }
-        if(mouse.click){            
-            //camera.position = scene.children[10].geometry.boundingSphere.center.clone();            
-            //var targetCenter = intersects[ 0 ].object.geometry.boundingSphere.center.clone();
-            //var vector = new THREE.Vector3( 10000, 0, 0 );
-            //vector.applyAxisAngle(vector,45*Math.PI/180);
-            controls.focus(intersects[ 0 ].object, true);
-            controls.rotateEx(new THREE.Vector3( 0, 45*Math.PI/180, 0 ));
-            mouse.click = false;
-        }
-
-    } else {
-
-        if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-
-        INTERSECTED = null;
-        if(mouse.click){
-            mouse.click = false;
-        }
-    }
-    //render();	
-}
-
-function onDocumentMouseDown( event ) {
-
-    event.preventDefault();
-
-    var vector = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
-    projector.unprojectVector( vector, camera );
-
-    var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
-    var intersects = raycaster.intersectObjects( objects );
-
-    if ( intersects.length > 0 ) {
-
-        //intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
-
-        var particle = new THREE.Sprite( particleMaterial );
-        particle.position = intersects[ 0 ].point;
-        particle.scale.x = particle.scale.y = 16;
-        scene.add( particle );
-
-    }
-
-    /*
-    // Parse all the faces
-    for ( var i in intersects ) {
-
-        intersects[ i ].face.material[ 0 ].color.setHex( Math.random() * 0xffffff | 0x80000000 );
-
-    }
-    */
-}
-function onMouseDblClick( event ) {
-
-    event.preventDefault();
-
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    if(event.button == 0) 
-        mouse.click = true;
-}
-
-//
-
 function animate() {
 
     requestAnimationFrame( animate );
@@ -464,22 +374,7 @@ function animate() {
 }
 
 function render() {
-
-    //theta += 0.1;
-
-    //camera.position.x = mouse.x;//radius * Math.sin( THREE.Math.degToRad( theta ) );
-    //camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
-    //camera.position.z = mouse.y;//radius * Math.cos( THREE.Math.degToRad( theta ) );
-    //camera.lookAt( scene.position );
-
-    // find intersections
-    //var mouse = controls.getMouseProjectionOnBall();
     
-    
-    
-    //if(mouse.click){
-    //    mouse.click = false;
-    //}
     renderer.render( scene, camera );
     
 }
