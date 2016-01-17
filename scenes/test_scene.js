@@ -43,7 +43,7 @@
 								"level1" : {
 									"type": "obj",
 									"url" : "data/B1L1.obj",
-									"material" : "faceted_white1",
+									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -63,7 +63,7 @@
 								"level2" : {
 									"type": "obj",
 									"url" : "data/B1L2.obj",
-									"material" : "faceted_white2",
+									"material" : "stone",
 									"position" : [ 0, 0, 4 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -83,7 +83,7 @@
 								"level3" : {
 									"type": "obj",
 									"url" : "data/B1L3.obj",
-									"material" : "faceted_white2",
+									"material" : "stone3",
 									"position" : [ 0, 0, 9 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -93,117 +93,7 @@
 						}				
 					}
 				},
-				"build4" : {
-					"position" : [ -90.843, 112.862, 0 ],
-					"rotation" : [ 0, 0, -0.9250 ],
-					"scale"	   : [ 1, 1, 1 ],
-					"visible"  : true,	
-					"userData" : {
-						"building" : 4
-					},
-					"children" : {
-						"B4L1" : {
-							"position" : [ 0, 0, 0 ],
-							"rotation" : [ 0, 0, 0 ],
-							"scale"	   : [ 1, 1, 1 ],
-							"visible"  : true,	
-							"userData" : {
-								"level" : 1
-							},
-							"children" : {
-								"level1" : {
-									"type": "obj",
-									"url" : "data/B4L1.obj",
-									"material" : "faceted_white1",
-									"position" : [ 0, 0, 0 ],
-									"rotation" : [ 0, 0, 0 ],
-									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true
-								}
-							}
-						},
-						"B4L2" : {
-							"position" : [ 0, 0, 0 ],
-							"rotation" : [ 0, 0, 0 ],
-							"scale"	   : [ 1, 1, 1 ],
-							"visible"  : true,	
-							"userData" : {
-								"level" : 2
-							},
-							"children" : {
-								"level2" : {
-									"type": "obj",
-									"url" : "data/B4L2.obj",
-									"material" : "faceted_white2",
-									"position" : [ 0, 0, 4 ],
-									"rotation" : [ 0, 0, 0 ],
-									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true	
-								}
-							}
-						},
-						"B4L3" : {
-							"position" : [ 0, 0, 0 ],
-							"rotation" : [ 0, 0, 0 ],
-							"scale"	   : [ 1, 1, 1 ],
-							"visible"  : true,	
-							"userData" : {
-								"level" : 3
-							},
-							"children" : {	
-								"level3" : {
-									"type": "obj",
-									"url" : "data/B4L3.obj",
-									"material" : "faceted_white3",
-									"position" : [ 0, 0, 8 ],
-									"rotation" : [ 0, 0, 0 ],
-									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true	
-								}
-							}
-						},
-						"B4L4" : {
-							"position" : [ 0, 0, 0 ],
-							"rotation" : [ 0, 0, 0 ],
-							"scale"	   : [ 1, 1, 1 ],
-							"visible"  : true,	
-							"userData" : {
-								"level" : 4
-							},
-							"children" : {	
-								"level4" : {
-									"type": "obj",
-									"url" : "data/B4L4.obj",
-									"material" : "faceted_white4",
-									"position" : [ 0, 0, 12 ],
-									"rotation" : [ 0, 0, 0 ],
-									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true	
-								}
-							}
-						},
-						"B4L5" : {
-							"position" : [ 0, 0, 0 ],
-							"rotation" : [ 0, 0, 0 ],
-							"scale"	   : [ 1, 1, 1 ],
-							"visible"  : true,	
-							"userData" : {
-								"level" : 5
-							},
-							"children" : {	
-								"level4" : {
-									"type": "obj",
-									"url" : "data/B4L5.obj",
-									"material" : "faceted_white4",
-									"position" : [ 0, 0, 16 ],
-									"rotation" : [ 0, 0, 0 ],
-									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true	
-								}
-							}
-						}							
-					}
-				},
+				
 				"build2" : {
 					"position" : [ -34.328, 8.333, 0 ],
 					"rotation" : [ 0, 0, -1.57 ],
@@ -225,7 +115,7 @@
 								"B2L1_obj" : {
 									"type": "obj",
 									"url" : "data/B2L1.obj",
-									"material" : "faceted_white1",
+									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -245,7 +135,7 @@
 								"B2L2_obj" : {
 									"type": "obj",
 									"url" : "data/B2L2.obj",
-									"material" : "faceted_white2",
+									"material" : "stone1",
 									"position" : [ 0, 0, 4 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -265,7 +155,7 @@
 								"B2L3_obj" : {
 									"type": "obj",
 									"url" : "data/B2L3.obj",
-									"material" : "faceted_white3",
+									"material" : "stone1",
 									"position" : [ 0, 0, 8 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -285,7 +175,7 @@
 								"B2L4_obj" : {
 									"type": "obj",
 									"url" : "data/B2L4.obj",
-									"material" : "faceted_white4",
+									"material" : "stone1",
 									"position" : [ 0, 0, 12 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -305,7 +195,7 @@
 								"B2L5_obj" : {
 									"type": "obj",
 									"url" : "data/B2L5.obj",
-									"material" : "faceted_white4",
+									"material" : "stone1",
 									"position" : [ 0, 0, 16 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -336,7 +226,7 @@
 								"B3L1_obj" : {
 									"type": "obj",
 									"url" : "data/B3L1.obj",
-									"material" : "faceted_white1",
+									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -356,7 +246,7 @@
 								"B3L2_obj" : {
 									"type": "obj",
 									"url" : "data/B3L2.obj",
-									"material" : "faceted_white2",
+									"material" : "stone1",
 									"position" : [ 0, 0, 4 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -376,7 +266,7 @@
 								"B3L3_obj" : {
 									"type": "obj",
 									"url" : "data/B3L3.obj",
-									"material" : "faceted_white3",
+									"material" : "stone1",
 									"position" : [ 0, 0, 8 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -396,7 +286,7 @@
 								"B3L4_obj" : {
 									"type": "obj",
 									"url" : "data/B3L4.obj",
-									"material" : "faceted_white4",
+									"material" : "stone1",
 									"position" : [ 0, 0, 12 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -416,8 +306,119 @@
 								"B3L5_obj" : {
 									"type": "obj",
 									"url" : "data/B3L5.obj",
-									"material" : "faceted_white4",
+									"material" : "stone1",
 									"position" : [ 0, 0, 16 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								}
+							}
+						}							
+					}
+				},
+				"build4" : {
+					"position" : [ -90.843, 112.862, 0 ],
+					"rotation" : [ 0, 0, -0.9250 ],
+					"scale"	   : [ 1, 1, 1 ],
+					"visible"  : true,	
+					"userData" : {
+						"building" : 4
+					},
+					"children" : {
+						"B4L1" : {
+							"position" : [ 0, 0, 0 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 1
+							},
+							"children" : {
+								"level1" : {
+									"type": "obj",
+									"url" : "data/B4L1.obj",
+									"material" : "stone",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true
+								}
+							}
+						},
+						"B4L2" : {
+							"position" : [ 0, 0, 4 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 2
+							},
+							"children" : {
+								"level2" : {
+									"type": "obj",
+									"url" : "data/B4L2.obj",
+									"material" : "stone",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								}
+							}
+						},
+						"B4L3" : {
+							"position" : [ 0, 0, 8 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 3
+							},
+							"children" : {	
+								"level3" : {
+									"type": "obj",
+									"url" : "data/B4L3.obj",
+									"material" : "stone",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								}
+							}
+						},
+						"B4L4" : {
+							"position" : [ 0, 0, 12 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 4
+							},
+							"children" : {	
+								"level4" : {
+									"type": "obj",
+									"url" : "data/B4L4.obj",
+									"material" : "stone",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								}
+							}
+						},
+						"B4L5" : {
+							"position" : [ 0, 0, 16 ],
+							"rotation" : [ 0, 0, 0 ],
+							"scale"	   : [ 1, 1, 1 ],
+							"visible"  : true,	
+							"userData" : {
+								"level" : 5
+							},
+							"children" : {	
+								"level4" : {
+									"type": "obj",
+									"url" : "data/B4L5.obj",
+									"material" : "stone",
+									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -447,7 +448,7 @@
 								"B5L1_obj" : {
 									"type": "obj",
 									"url" : "data/B5L1.obj",
-									"material" : "faceted_white1",
+									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -467,7 +468,7 @@
 								"B5L2_obj" : {
 									"type": "obj",
 									"url" : "data/B5L2.obj",
-									"material" : "faceted_white2",
+									"material" : "stone2",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -476,7 +477,7 @@
 							}
 						},
 						"B5L3" : {
-							"position" : [ 0, 0, 0 ],
+							"position" : [ 0, 0, 8 ],
 							"rotation" : [ 0, 0, 0 ],
 							"scale"	   : [ 1, 1, 1 ],
 							"visible"  : true,	
@@ -487,8 +488,8 @@
 								"B5L3_obj" : {
 									"type": "obj",
 									"url" : "data/B5L3.obj",
-									"material" : "faceted_white3",
-									"position" : [ 0, 0, 4 ],
+									"material" : "stone3",
+									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -496,7 +497,7 @@
 							}
 						},
 						"B5L4" : {
-							"position" : [ 0, 0, 0 ],
+							"position" : [ 0, 0, 12 ],
 							"rotation" : [ 0, 0, 0 ],
 							"scale"	   : [ 1, 1, 1 ],
 							"visible"  : true,	
@@ -507,8 +508,8 @@
 								"B5L4_obj" : {
 									"type": "obj",
 									"url" : "data/B5L4.obj",
-									"material" : "faceted_white4",
-									"position" : [ 0, 0, 8 ],
+									"material" : "stone4",
+									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -516,7 +517,7 @@
 							}
 						},
 						"B5L5" : {
-							"position" : [ 0, 0, 0 ],
+							"position" : [ 0, 0, 16 ],
 							"rotation" : [ 0, 0, 0 ],
 							"scale"	   : [ 1, 1, 1 ],
 							"visible"  : true,	
@@ -527,8 +528,8 @@
 								"B5L5_obj" : {
 									"type": "obj",
 									"url" : "data/B5L5.obj",
-									"material" : "faceted_white4",
-									"position" : [ 0, 0, 12 ],
+									"material" : "stone5",
+									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
@@ -589,7 +590,7 @@
 								"level1" : {
 									"type": "obj",
 									"url" : "data/B7L1.obj",
-									"material" : "faceted_white1",
+									"material" : "glass",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -603,20 +604,27 @@
 		},
 
 		
+		"light1": {
+			"type"	  : "PointLight",
+			"position": [ 0, 300, 0, -500, 300, 500 ],
+			"color"   : 16777166,
+			"intensity"	 : 0.0
+		},
 		"light2": {
 			"type"	  : "PointLight",
-			"position": [ -1000, 1000, 1000 ],
-			"color"   : 16772829,
-			"intensity"	 : 1.0
-		},
+			"position": [-500, 300, 500 ],
+			"color"   : 16777166,
+			"intensity"	 : 2.0
+		},		
 		
-		"light3": {
-			"type"	  : "AmbientLight",
-			"color"   : 263172,
-			"intensity"	 : 0.00001
-			
-		},
-
+		"light_cube" : {
+            "geometry" : "cube1",
+            "material" : "faceted_white1",
+            "position" : [ -90.843, 20, 112.862 ],
+            "rotation" : [ 0, 0, 0 ],
+            "scale"	   : [ 1, 1, 1 ],	
+            "visible"  : false			
+        },	
 		"camera1": {
 			"type"  : "PerspectiveCamera",
 			"fov"   : 50,
@@ -669,6 +677,30 @@
 		"mirea_ground": {
 			"type": "MeshBasicMaterial",
 			"parameters": { "color": 16777215, "map": "mirea_ground" }
+		},
+		"stone1": {
+			"type": "MeshBasicMaterial",
+			"parameters": { "color": 16777215, "map": "stone1" }
+		},
+		"stone2": {
+			"type": "MeshBasicMaterial",
+			"parameters": { "color": 16777215, "map": "stone2" }
+		},
+		"stone3": {
+			"type": "MeshBasicMaterial",
+			"parameters": { "color": 16777215, "map": "stone3" }
+		},
+		"stone4": {
+			"type": "MeshBasicMaterial",
+			"parameters": { "color": 16777215, "map": "stone4" }
+		},
+		"stone5": {
+			"type": "MeshBasicMaterial",
+			"parameters": { "color": 16777215, "map": "stone5" }
+		},
+		"glass": {
+			"type": "MeshLambertMaterial",
+			"parameters": { "color": 1052742, "envMap": "stone5", "opacity": 0.25, "transparent": true }
 		}
 	},
 	"textures": {
@@ -687,6 +719,26 @@
         "mirea_ground": {
 			"url": "data/hd_mirea.jpg",
 			"anisotropy": 4
+		},
+        "stone1": {
+			"url": "data/102.png",
+			"anisotropy": 4
+		},
+        "stone2": {
+			"url": "data/102.png",
+			"anisotropy": 4
+		},
+        "stone3": {
+			"url": "data/102.png",
+			"anisotropy": 4
+		},
+        "stone4": {
+			"url": "data/102.png",
+			"anisotropy": 4
+		},
+        "stone5": {
+			"url": "data/102.png",
+			"anisotropy": 4
 		}
 	},
 	"geometries": {
@@ -696,6 +748,15 @@
 			"width" : 100,
 			"height": 100,
 			"depth" : 100,
+			"widthSegments"  : 1,
+			"heightSegments" : 1,
+			"depthSegments"  : 1
+		},
+		"cube1": {
+			"type"  : "cube",
+			"width" : 5,
+			"height": 5,
+			"depth" : 5,
 			"widthSegments"  : 1,
 			"heightSegments" : 1,
 			"depthSegments"  : 1
@@ -712,7 +773,7 @@
 	"fogs":	{
 		"basic": {
 			"type": "linear",
-			"color": [1,1,1],
+			"color": [0,0,0],
 			"near": 1,
 			"far": 1000
 		},
