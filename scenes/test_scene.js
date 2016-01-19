@@ -51,15 +51,61 @@
 								"level" : 2
 							},
 							"children" : {
-								"level1" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B1L1.obj",
+									"url" : "data/Building1/Level1/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building1/Level1/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level1/stairs.obj",
 									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level1/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level1/floors.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"windows" : {
+									"type": "obj",
+									"url" : "data/Building1/Level1/windows.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
 								}
+								
 							}
 						},
 						"B1L2" : {
@@ -71,15 +117,61 @@
 								"level" : 3
 							},
 							"children" : {
-								"level2" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B1L2.obj",
+									"url" : "data/Building1/Level2/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building1/Level2/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level2/stairs.obj",
 									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level2/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level2/floors.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"windows" : {
+									"type": "obj",
+									"url" : "data/Building1/Level2/windows.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
 								}
+								
 							}
 						},
 						"B1L3" : {
@@ -91,15 +183,70 @@
 								"level" : 4
 							},
 							"children" : {
-								"level3" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B1L3.obj",
-									"material" : "stone3",
+									"url" : "data/Building1/Level3/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building1/Level3/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level3/stairs.obj",
+									"material" : "stone1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level3/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level3/floors.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"windows" : {
+									"type": "obj",
+									"url" : "data/Building1/Level3/windows.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"roofs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level3/roofs.obj",
+									"material" : "asfalt",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								}
+								
 							}
 						},
 						"B1L4" : {
@@ -111,15 +258,70 @@
 								"level" : 5
 							},
 							"children" : {
-								"level3" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B1L4.obj",
+									"url" : "data/Building1/Level4/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building1/Level4/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level4/stairs.obj",
 									"material" : "stone1",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level4/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level4/floors.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"windows" : {
+									"type": "obj",
+									"url" : "data/Building1/Level4/windows.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"roofs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level4/roofs.obj",
+									"material" : "asfalt",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
 								}
+								
 							}
 						},
 						"B1L5" : {
@@ -131,15 +333,52 @@
 								"level" : 6
 							},
 							"children" : {
-								"level3" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B1L5.obj",
-									"material" : "stone1",
+									"url" : "data/Building1/Level5/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building1/Level5/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building1/Level5/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"windows" : {
+									"type": "obj",
+									"url" : "data/Building1/Level5/windows.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"roofs" : {
+									"type": "obj",
+									"url" : "data/Building1/Level5/roofs.obj",
+									"material" : "asfalt",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								}
+								
 							}
 						}					
 					}
@@ -385,15 +624,61 @@
 								"level" : 1
 							},
 							"children" : {
-								"level1" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B4L1.obj",
+									"url" : "data/Building4/Level1/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building4/Level1/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building4/Level1/stairs.obj",
+									"material" : "stone1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level1/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level1/floors.obj",
 									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
-									"visible"  : true
+									"visible"  : true	
+								},
+								"windows" : {
+									"type": "obj",
+									"url" : "data/Building4/Level1/windows.obj",
+									"material" : "basic_white",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
 								}
+								
 							}
 						},
 						"B4L2" : {
@@ -405,24 +690,61 @@
 								"level" : 2
 							},
 							"children" : {
-								"level2" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B4L2.obj",
+									"url" : "data/Building4/Level2/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building4/Level2/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building4/Level2/stairs.obj",
+									"material" : "stone1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level2/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level2/floors.obj",
 									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								},
-								"level2w" : {
+								"windows" : {
 									"type": "obj",
-									"url" : "data/B4L2w.obj",
-									"material" : "glass",
+									"url" : "data/Building4/Level2/windows.obj",
+									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								}
+								
 							}
 						},
 						"B4L3" : {
@@ -433,25 +755,62 @@
 							"userData" : {
 								"level" : 3
 							},
-							"children" : {	
-								"level3" : {
+							"children" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B4L3.obj",
+									"url" : "data/Building4/Level3/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building4/Level3/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building4/Level3/stairs.obj",
+									"material" : "stone1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level3/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level3/floors.obj",
 									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								},
-								"level3w" : {
+								"windows" : {
 									"type": "obj",
-									"url" : "data/B4L3w.obj",
-									"material" : "glass",
+									"url" : "data/Building4/Level3/windows.obj",
+									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								}
+								
 							}
 						},
 						"B4L4" : {
@@ -462,25 +821,62 @@
 							"userData" : {
 								"level" : 4
 							},
-							"children" : {	
-								"level4" : {
+							"children" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B4L4.obj",
+									"url" : "data/Building4/Level4/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"glass" : {
+									"type": "obj",
+									"url" : "data/Building4/Level4/glass.obj",
+									"material" : "glass",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"stairs" : {
+									"type": "obj",
+									"url" : "data/Building4/Level4/stairs.obj",
+									"material" : "stone1",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level4/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"floors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level4/floors.obj",
 									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								},
-								"level4w" : {
+								"windows" : {
 									"type": "obj",
-									"url" : "data/B4L4w.obj",
-									"material" : "glass",
+									"url" : "data/Building4/Level4/windows.obj",
+									"material" : "basic_white",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
 									"visible"  : true	
 								}
+								
 							}
 						},
 						"B4L5" : {
@@ -491,11 +887,29 @@
 							"userData" : {
 								"level" : 5
 							},
-							"children" : {	
-								"level4" : {
+							"children" : {
+								"wall" : {
 									"type": "obj",
-									"url" : "data/B4L5.obj",
-									"material" : "stone1",
+									"url" : "data/Building4/Level5/walls.obj",
+									"material" : "rakuska",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"doors" : {
+									"type": "obj",
+									"url" : "data/Building4/Level5/doors.obj",
+									"material" : "basic_brown",
+									"position" : [ 0, 0, 0 ],
+									"rotation" : [ 0, 0, 0 ],
+									"scale"	   : [ 1, 1, 1 ],
+									"visible"  : true	
+								},
+								"roofs" : {
+									"type": "obj",
+									"url" : "data/Building4/Level5/roofs.obj",
+									"material" : "asfalt",
 									"position" : [ 0, 0, 0 ],
 									"rotation" : [ 0, 0, 0 ],
 									"scale"	   : [ 1, 1, 1 ],
@@ -747,6 +1161,14 @@
 			"type": "MeshLambertMaterial",
 			"parameters": { "color": 16777215 }
 		},
+		"basic_black": {
+			"type": "MeshLambertMaterial",
+			"parameters": { "color": 6908265 }
+		},
+		"basic_brown": {
+			"type": "MeshLambertMaterial",
+			"parameters": { "color": 10824234 }
+		},
 		"green": {
 			"type": "MeshLambertMaterial",
 			"parameters": { "color": 3887672 }
@@ -779,9 +1201,17 @@
 			"type": "MeshPhongMaterial",
 			"parameters": { "color": 16777215, "map": "stone5", "bumpMap": "stone5", "bumpScale": -0.1, "wrap" : "repeat" }
 		},
+		"rakuska": {
+			"type": "MeshPhongMaterial",
+			"parameters": { "color": 16777215, "map": "rakuska", "bumpMap": "rakuska", "bumpScale": -0.1, "wrap" : "repeat" }
+		},
 		"glass": {
 			"type": "MeshPhongMaterial",
 			"parameters": { "color": 1052742, "opacity": 0.25, "transparent": true }
+		},
+		"asfalt": {
+			"type": "MeshPhongMaterial",
+			"parameters": { "color": 16777215, "map": "asfalt", "bumpMap": "asfalt", "bumpScale": -0.1, "wrap" : "repeat" }
 		}
 	},
 	"textures": {
@@ -825,6 +1255,16 @@
         "stone5": {
 			"url": "data/102.png",
 			"repeat" : [ 16, 16 ],
+			"anisotropy": 4
+		},
+        "rakuska": {
+			"url": "data/22rakushechnik.jpg",
+			"repeat" : [ 16, 16 ],
+			"anisotropy": 4
+		},
+        "asfalt": {
+			"url": "data/asfalt.jpg",
+			"repeat" : [ 8, 8 ],
 			"anisotropy": 4
 		}
 	},
