@@ -31,7 +31,7 @@ var buildings = {
 };
 var levels = {
 	"Общий вид": "6",
-	//"Уровень 5": "5",
+	"Уровень 5": "5",
 	"Уровень 4": "4",
 	"Уровень 3": "3",
 	"Уровень 2": "2",
@@ -359,7 +359,7 @@ function onWindowResize() {
 
     renderer.setSize( window.innerWidth, window.innerHeight );
 
-    controls.handleResize();
+    //controls.handleResize();
 
     render();
 
